@@ -1,0 +1,12 @@
+<div class="navbar">
+    <img class="navbar-logo" src="/img/logo.png">
+    <input class="navbar-search" type="text" placeholder="Tìm kiếm sản phẩm">
+    <button class="navbar-login-btn">Đăng nhập</button>
+</div>
+
+<script type="text/javascript">
+    var loginButton = document.querySelector('.navbar-login-btn');
+    loginButton.onclick = () => {
+        window.location = 'http://localhost:3000/login';
+    }
+</script>
