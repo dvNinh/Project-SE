@@ -3,5 +3,14 @@
 </div>
 
 <div class="home">
-    
+    {{#each products}}
+    <div>
+        <img src="{{this.image}}" alt="{{this.name}}">
+        <div>
+            <h4>{{this.name}}</h4>
+            <p>{{this.description}}</p>
+            <button>Thêm vào giỏ hàng</a>
+        </div>
+    </div>
+    {{/each}}
 </div>

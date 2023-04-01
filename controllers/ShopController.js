@@ -1,6 +1,15 @@
+const Product = require('../models/Product');
+const { multipleMongooseToObject } = require('../util/mongoose');
+
 class ShopController {
-    getHome(req, res) {
-        res.render('home');
+    getHome(req, res, next) {
+        Product.find({})
+            .then(products => {
+                res.render('home', { 
+                    products: multipleMongooseToObject(products)
+                });
+            })
+            .catch(next);
     }
 }
 

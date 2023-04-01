@@ -9,9 +9,6 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const morgan = require('morgan');
-app.use(morgan('combined'));
-
 const handlebars = require('express-handlebars');
 app.engine('hbs', handlebars.engine({
     extname: '.hbs',
@@ -23,6 +20,9 @@ const shopRouter = require('./routes/shop');
 const authRouter = require('./routes/auth');
 app.use(shopRouter);
 app.use(authRouter);
+
+const db = require('./config/db');
+db.connect();
 
 const port = 3000;
 app.listen(port, () => {

@@ -1,0 +1,16 @@
+<div class="login-box">
+    <h1>Đăng nhập</h1>
+    {{#if message}}
+        <div class="message">{{message}}</div>
+    {{/if}}
+    <form method="post" action="/login">
+        <label for="username">Tên đăng nhập:</label><br>
+        <input id="username" name="username" type="text"><br>
+        <label for="password">Mật khẩu:</label><br>
+        <input id="password" name="password" type="text"><br>
+        <input type="submit" value="Đăng nhập">
+    </form>
+    <a href="#">Quên mật khẩu?</a><br>
+    <p>Chưa có tài khoản?</p>
+    <a href="http://localhost:3000/register">Đăng kí</a>
+</div>
