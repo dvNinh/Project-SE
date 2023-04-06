@@ -35,6 +35,10 @@ class ShopController {
             })
             .catch(next);
     }
+
+    getCart(req,res,next) {
+        res.render('/cart')
+    }
 }
 
 module.exports = new ShopController;
