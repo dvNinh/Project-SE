@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const { multipleMongooseToObject } = require('../util/mongoose');
+const { mongooseToObject } = require('../util/mongoose');
 
 class ShopController {
     getHome(req, res, next) {
@@ -18,11 +19,21 @@ class ShopController {
 
     store(req, res, next) {
         const formData = req.body;
-        const product = new Product;
+        const product = new Product(formData);
         product.save()
             .then(() =>
                 res.redirect('/'))
             .catch(error => {});
+    }
+
+    getProduct(req, res, next) {
+        Product.findOne({ slug: req.params.slug })
+            .then(product => {
+                res.render('products/show', {
+                    product: mongooseToObject(product)
+                });
+            })
+            .catch(next);
     }
 }
 

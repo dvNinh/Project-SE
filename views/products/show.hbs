@@ -1,0 +1,29 @@
+<div class="header" style="height: 56px;">
+    {{> header}}
+</div>
+
+<div class="product">
+    <div class="container-fluid w-75">
+        <div class="row">
+            <div class="col-3 p-2">
+                <img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
+            </div>
+
+            <div class="col-9 p-2">
+                <h3 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <h5 class="card-title" style="color: red;">Giá: {{product.price}} VNĐ</h5>
+                <h6 class="card-title">Còn lại: {{product.quantity}}</h6>
+                <a class="btn btn-primary" href="#">Thêm vào giỏ hàng</a>
+            </div>
+        </div>
+
+        <div>
+            <h4>Chi tiết sản phẩm</h3>
+        </div>
+
+        <div>
+            <h4>Đánh giá</h3>
+        </div>
+    </div>
+</div>
