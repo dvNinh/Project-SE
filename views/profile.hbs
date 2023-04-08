@@ -1,0 +1,45 @@
+<div class="header" style="height: 56px;">
+    {{> header}}
+</div>
+
+<div class="profile">
+    <div class="container-sm">
+        <div class="row py-5 px-3">
+            <div class="col-12 col-sm-12 col-md-9 col-lg-6 col-xl-5">
+                <p class="h3 pb-3">Thông tin người dùng</p>
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Tên đăng nhập:</th>
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tên:</th>
+                        <td>{{user.firstName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Họ:</th>
+                        <td>{{user.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>{{user.phoneNumber}}</td>
+                    </tr>
+                </table>                        
+            </div>
+                    
+            <div class="col-4 col-sm-5 col-md-3 col-lg-2 col-xl-2">
+                <img class="w-100" src="{{user.avatar}}" alt="{{user.username}} avatar">
+            </div>
+
+            <div class="col-8 col-sm-7 col-md-12 col-lg-4 col-xl-5">
+                <a>Đổi mật khẩu</a>
+                <br>
+                <a>Cập nhật thông tin</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,12 +4,12 @@
 
 <div class="home">
     <div class="container-sm">
-        <div class="row">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
             {{#each products}}
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 p-2">
+            <div class="col p-2">
                 <div class="card">
                     <a href="/products/{{this.slug}}">
-                        <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+                        <img class="card-img-top w-100" src="{{this.image}}" alt="{{this.name}}">
                     </a>
                     <div class="card-body">
                         <a href="/products/{{this.slug}}" class="text-decoration-none">

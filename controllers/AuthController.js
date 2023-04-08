@@ -1,4 +1,6 @@
 const Account = require('../models/Account');
+const User = require('../models/User');
+const { mongooseToObject } = require('../util/mongoose');
 
 class AuthController {
     getLogin(req, res) {
@@ -6,19 +8,29 @@ class AuthController {
     }
 
     postLogin(req, res, next) {
-        if (!req.body.username) {
-            res.render('login', { message: 'Chưa nhập tên đăng nhập' });
-            return;
-        }
-        if (!req.body.password) {
-            res.render('login', { message: 'Chưa nhập mật khẩu' });
-            return;
-        }
+        if (!req.body.username)
+            return res.render('login', { message: 'Chưa nhập tên đăng nhập' });
+        if (!req.body.password)
+            return res.render('login', { message: 'Chưa nhập mật khẩu' });
+            
         const formData = req.body;
-        Account.find(formData)
-            .then(result => {
-                if (result.length > 0) res.redirect('/home');
-                else res.render('login', { message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
+        Account.findOne(formData)
+            .then(account => {
+                if (!account) throw new Error('Tên đăng nhập hoặc mật khẩu không đúng');
+                return account.username;
+            })
+            .then(username => {
+                return User.findOne({ username });
+            })
+            .then(user => {
+                req.session.regenerate(err => {
+                    if (err) return next(err);
+                    req.session.user = mongooseToObject(user);
+                    req.session.save(err => {
+                        if (err) return next(err);
+                        res.redirect('/');
+                    });
+                });
             })
             .catch(next);
     }
@@ -28,33 +40,60 @@ class AuthController {
     }
 
     postRegister(req, res, next) {
-        if (!req.body.username) {
-            res.render('register', { message: 'Chưa nhập tên đăng nhập' });
-            return;
-        }
-        if (!req.body.password) {
-            res.render('register', { message: 'Chưa nhập mật khẩu' });
-            return;
-        }
-        if (req.body.password !== req.body.retype) {
-            res.render('register', { message: 'Mật khẩu nhập không khớp' });
-            return;
-        }
+        if (!req.body.username)
+            return res.render('register', { message: 'Chưa nhập tên đăng nhập' });
+        if (!req.body.password) 
+            return res.render('register', { message: 'Chưa nhập mật khẩu' });
+        if (req.body.password !== req.body.retype)
+            return res.render('register', { message: 'Mật khẩu nhập không khớp' });
             
         const formData = {
             username: req.body.username,
             password: req.body.password
         };
-        Account.find({ username: formData.username })
-            .then(result => {
-                if (result.length === 0) {
-                    const account = new Account(formData);
-                    account.save()
-                        .then(() => res.redirect('/login'))
-                        .catch(next);
-                } else res.render('register', { message: 'Tên đăng nhập đã tồn tại' });
+        Account.findOne({ username: formData.username })
+            .then(account => {
+                if (account) throw new Error('Tên đăng nhập đã tồn tại');
+                else return formData;
+            })
+            .then(formData => {
+                const account = new Account(formData);
+                account.save();
+                return account.username;
+            })
+            .then(username => {
+                const user = new User({ username });
+                user.save();
+            })
+            .then(() => res.redirect('/login'))
+            .catch(next);
+    }
+
+    logout(req, res, next) {
+        req.session.user = null;
+        req.session.save(err => {
+            if (err) return next(err);
+            req.session.regenerate(err => {
+                if (err) return next(err);
+                res.redirect('/');
+            });
+        });
+    }
+
+    getProfile(req, res, next) {
+        const username = req.session.user.username;
+        User.findOne({ username })
+            .then(user => {
+                console.log(user);
+                res.render('profile', {
+                    user: mongooseToObject(user)
+                });
             })
             .catch(next);
+    }
+
+    updateProfile(req, res, next) {
+
     }
 }
 
