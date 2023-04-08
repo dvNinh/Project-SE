@@ -2,27 +2,25 @@
     {{> header}}
 </div>
 
-<div class="home mt-4 ml-1 mr-1">
-    <!--<div class="container-fluid w-75"> -->
-        <div class="row mt-4 ml-1 mr-1">
+<div class="home">
+    <div class="container-sm">
+        <div class="row">
             {{#each products}}
-            <div class="col-3 p-2">
-                <div class="card card-product-item" style="width: 18rem;">
-                    
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 p-2">
+                <div class="card">
                     <a href="/products/{{this.slug}}">
                         <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
-                    </a> 
+                    </a>
                     <div class="card-body">
-
-                        <a href="/products/{{this.slug}}">
-                            <h5 class="card-title" style="">{{this.name}}</h5>
+                        <a href="/products/{{this.slug}}" class="text-decoration-none">
+                            <h6 class="card-title" style="color: black;height: 40px;overflow: hidden;">{{this.name}}</h6>
                         </a>
-                        <h5 class="card-title" style="color: red;">Giá: {{this.price}} VNĐ</h5>
+                        <h6 class="card-title" style="color: red;">Giá: {{this.price}} VNĐ</h6>
                         <a class="btn btn-primary" href="#">Thêm vào giỏ hàng</a>
                     </div>
                 </div>
             </div>
             {{/each}}
         </div>
-    <!--</div>-->
+    </div>
 </div>

@@ -3,18 +3,30 @@
 </div>
 
 <div class="product">
-    <div class="container-fluid w-75">
+    <div class="container-sm">
         <div class="row">
-            <div class="col-3 p-2">
+            <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 col-xxl-3 p-2">
                 <img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
             </div>
 
-            <div class="col-9 p-2">
-                <h3 class="card-title">{{product.name}}</h5>
-                <p class="card-text">{{product.description}}</p>
-                <h5 class="card-title" style="color: red;">Giá: {{product.price}} VNĐ</h5>
-                <h6 class="card-title">Còn lại: {{product.quantity}}</h6>
-                <a class="btn btn-primary" href="#">Thêm vào giỏ hàng</a>
+            <div class="col-sm-12 col-md-6 col-lg-7 col-xl-8 col-xxl-9 p-2">
+                <p class="h3 card-title">{{product.name}}</p>
+                <p class="card-text pt-1">{{product.description}}</p>
+                <p class="h5 card-title" style="color: red;">Giá: {{product.price}} VNĐ</p>
+                <p class="h6 card-title pt-1 pb-3">Còn lại: {{product.quantity}}</p>
+                <a class="btn btn-primary" id="cartButton" data-id="{{product.name}}" href="cart">Thêm vào giỏ hàng</a>
+
+                <script>
+                    // Lấy được name của các sp khi click
+                    var button = document.getElementById("cartButton")
+                    var myList = []
+                    button.addEventListener("click", function() {
+                        var id = button.getAttribute("data-id")
+                        myList.push(id)
+                        console.log(myList)
+                    })
+                </script>
+
             </div>
         </div>
 
