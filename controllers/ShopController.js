@@ -36,8 +36,9 @@ class ShopController {
             .catch(next);
     }
 
-    getCart(req,res,next) {
-        res.render('/cart')
+    getCart(req, res, next) {
+        //res.json("NOT FOUND");
+        res.render('cart');
     }
 }
 

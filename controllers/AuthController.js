@@ -1,4 +1,7 @@
 const Account = require('../models/Account');
+const { multipleMongooseToObject } = require('../util/mongoose');
+const { mongooseToObject } = require('../util/mongoose');
+const Product = require('../models/Product');
 
 class AuthController {
     getLogin(req, res) {
@@ -15,10 +18,15 @@ class AuthController {
             return;
         }
         const formData = req.body;
+
+        var products = Product.find({});
+
         Account.find(formData)
             .then(result => {
-                if (result.length > 0) res.redirect('/home');
-                else res.render('login', { message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
+                if (result.length > 0) {
+                    //res.json(typeof(result));
+                    res.render('home', { account: result, products: multipleMongooseToObject(Product.find({})) });
+                } else res.render('login', { message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
             })
             .catch(next);
     }
@@ -40,7 +48,7 @@ class AuthController {
             res.render('register', { message: 'Mật khẩu nhập không khớp' });
             return;
         }
-            
+
         const formData = {
             username: req.body.username,
             password: req.body.password
