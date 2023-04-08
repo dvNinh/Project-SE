@@ -7,6 +7,8 @@ const Product = new Schema({
     price: { type: Number },
     image: { type: String },
     quantity: { type: Number },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
     slug: { type: String },
 }, { timestamps: true });
 
