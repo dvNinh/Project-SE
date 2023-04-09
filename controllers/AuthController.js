@@ -1,5 +1,7 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
+const Product = require('../models/Product');
+const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
 
 class AuthController {
@@ -14,6 +16,7 @@ class AuthController {
             return res.render('login', { message: 'Chưa nhập mật khẩu' });
             
         const formData = req.body;
+
         Account.findOne(formData)
             .then(account => {
                 if (!account) throw new Error('Tên đăng nhập hoặc mật khẩu không đúng');
@@ -46,7 +49,7 @@ class AuthController {
             return res.render('register', { message: 'Chưa nhập mật khẩu' });
         if (req.body.password !== req.body.retype)
             return res.render('register', { message: 'Mật khẩu nhập không khớp' });
-            
+
         const formData = {
             username: req.body.username,
             password: req.body.password
