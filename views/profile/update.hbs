@@ -1,0 +1,48 @@
+<div class="header" style="height: 56px;">
+    {{> header}}
+</div>
+
+<div class="profile">
+    <div class="container-sm">
+        <div class="row py-5 px-3">
+            <div class="col-12 col-sm-12 col-md-9 col-lg-6 col-xl-5">
+                <p class="h3 pb-3">Cập nhật thông tin người dùng</p>
+                <table class="table table-borderless align-middle">
+                    <form action="/profile/update/{{user._id}}" method="post">
+                        <tr>
+                            <th><label for="username">Tên đăng nhập:</label></th>
+                            <td><input type="text" class="form-control" id="username" name="username" value="{{user.username}}" disabled=""></td>
+                        </tr>
+                        <tr>
+                            <th><label for="firstName">Tên:</label></th>
+                            <td><input type="text" class="form-control" id="firstName" name="firstName" value="{{user.firstName}}"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="lastName">Họ:</label></th>
+                            <td><input type="text" class="form-control" id="lastName" name="lastName" value="{{user.lastName}}"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="email">Email:</label></th>
+                            <td><input type="text" class="form-control" id="email" name="email" value="{{user.email}}"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="phoneNumber">Số điện thoại:</label></th>
+                            <td><input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <button type="submit" class="btn btn-primary mt-3 me-3">Xác nhận</button>
+                                <a class="btn btn-secondary mt-3 ms-3" href="/profile/view" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+                    
+            <div class="col-4 col-sm-5 col-md-3 col-lg-2 col-xl-2">
+                <img class="w-100" src="{{user.avatar}}" alt="{{user.username}} avatar">
+            </div>
+        </div>
+    </div>
+</div>
