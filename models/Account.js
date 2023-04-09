@@ -19,4 +19,8 @@ const Account = new Schema({
     }
 }, { timestamps: true });
 
+function getCart() {
+    return this.cart;
+}
+
 module.exports = mongoose.model('Account', Account);
