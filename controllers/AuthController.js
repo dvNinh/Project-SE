@@ -84,16 +84,28 @@ class AuthController {
         const username = req.session.user.username;
         User.findOne({ username })
             .then(user => {
-                console.log(user);
-                res.render('profile', {
+                res.render('profile/view', {
                     user: mongooseToObject(user)
                 });
             })
             .catch(next);
     }
 
-    updateProfile(req, res, next) {
+    getUpdateProfile(req, res, next) {
+        const username = req.session.user.username;
+        User.findOne({ username })
+            .then(user => {
+                res.render('profile/update', {
+                    user: mongooseToObject(user)
+                });
+            })
+            .catch(next);
+    }
 
+    postUpdateProfile(req, res, next) {
+        User.updateOne({ _id: req.params.id }, req.body)
+            .then(() => res.redirect('/profile/view'))
+            .catch(next);
     }
 }
 
