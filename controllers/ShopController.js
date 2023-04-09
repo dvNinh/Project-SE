@@ -7,6 +7,7 @@ class ShopController {
         Product.find({})
             .then(products => {
                 res.render('home', {
+                    user: req.session.user,
                     products: multipleMongooseToObject(products)
                 });
             })
@@ -30,6 +31,7 @@ class ShopController {
         Product.findOne({ slug: req.params.slug })
             .then(product => {
                 res.render('products/show', {
+                    user: req.session.user,
                     product: mongooseToObject(product)
                 });
             })

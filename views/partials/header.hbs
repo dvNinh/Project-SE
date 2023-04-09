@@ -11,19 +11,11 @@
 					<a class="nav-link active" aria-current="page" href="/">Home</a>
 				</li>
 
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Đăng nhập</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="/register">Đăng ký</a>
-				</li>
-
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Dropdown
 					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="#">Action</a></li>
 						<li><a class="dropdown-item" href="#">Another action</a></li>
 						<li><hr class="dropdown-divider"></li>
@@ -37,9 +29,31 @@
 			</ul>
 
 			<form class="d-flex">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
+				<input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
+				<button class="btn btn-success me-5" type="submit">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  						<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+					</svg>
+				</button>
 			</form>
 		</div>
+
+		{{#if user.username}}
+		<div class="d-flex float-end">
+			<div class="dropdown">
+				<a class="pe-2" href="#" role="button" data-bs-toggle="dropdown">
+					<img src={{user.avatar}} class="rounded-circle" width="40" height="40" loading="lazy"/>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+					<li><a class="dropdown-item h6" href="/profile/view">{{user.username}}</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item" href="#">Cài đặt</a></li>
+					<li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+				</ul>
+			</div>
+		</div>
+		{{else}}
+		<a class="btn btn-primary pe-2" href="/login" role="button">Đăng nhập</a>
+		{{/if}}
 	</div>
 </nav>

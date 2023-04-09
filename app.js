@@ -9,6 +9,13 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const session = require('express-session');
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
+}));
+
 const handlebars = require('express-handlebars');
 app.engine('hbs', handlebars.engine({
     extname: '.hbs',
