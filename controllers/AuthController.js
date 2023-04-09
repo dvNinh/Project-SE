@@ -25,7 +25,13 @@ class AuthController {
             .then(result => {
                 if (result.length > 0) {
                     //res.json(typeof(result));
-                    res.render('home', { account: result, products: multipleMongooseToObject(Product.find({})) });
+                    Product.find({})
+                        .then(products => {
+                            res.render('home', {
+                                account: result,
+                                products: multipleMongooseToObject(products)
+                            })
+                        })
                 } else res.render('login', { message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
             })
             .catch(next);
