@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const User = new Schema({
     username: { type: String },
+    password: { type: String },
+    role: { type: String, enum: ['admin', 'customer'], default: 'customer' },
     firstName: { type: String, default: '' },
     lastName: { type: String, default: '' },
     avatar: { type: String, default: '/img/default_avatar.jpg' },

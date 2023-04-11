@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const urlConnect = 'mongodb://127.0.0.1:27017/Project_SE';
+const urlConnect = 'mongodb://127.0.0.1:27017/btl';
 
 async function connect() {
     try {

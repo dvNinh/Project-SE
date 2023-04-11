@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
 
@@ -35,6 +36,22 @@ class ShopController {
                     product: mongooseToObject(product)
                 });
             })
+            .catch(next);
+    }
+    
+    addProductToCart(req, res, next) {
+        const data = {
+            username: req.session.user.username,
+            productId: req.params.id
+        };
+        Cart.findOne(data)
+            .then(cart => {
+                if (!cart) {
+                    const cart = new Cart(data);
+                    cart.save();
+                }
+            })
+            .then(() => res.json({ success: true, message: 'Đã thêm vào giỏ hàng' }))
             .catch(next);
     }
 }
