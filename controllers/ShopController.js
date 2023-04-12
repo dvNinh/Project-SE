@@ -38,7 +38,7 @@ class ShopController {
             })
             .catch(next);
     }
-    
+
     addProductToCart(req, res, next) {
         const data = {
             username: req.session.user.username,
@@ -53,6 +53,22 @@ class ShopController {
             })
             .then(() => res.json({ success: true, message: 'Đã thêm vào giỏ hàng' }))
             .catch(next);
+    }
+
+    warehouseProducts(req, res, next) {
+        Promise.all([Product.find({}), Product.countDocumentsDeleted()])
+            .then(
+                ([products, deleteCount]) =>
+                res.render('admin/warehouse', {
+                    deleteCount,
+                    products: multipleMongooseToObject(products)
+                })
+            )
+            .catch(next)
+    }
+
+    handleFormActions(req, res, next) {
+        res.render('Handle form action');
     }
 }
 
