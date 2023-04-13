@@ -1,0 +1,36 @@
+<div class="change-pass">
+    <div class="container-sm">
+        <div class="row py-5 px-3">
+            <div class="col-0 col-md-1 col-xl-2"></div>
+            <div class="col-12 col-md-10 col-xl-8">
+                <p class="h3 pb-3">Đặt lại mật khẩu</p>
+                <table class="table table-borderless align-middle">
+                    <form action="/change-pass" method="post">
+                        <tr>
+                            <th><label for="username">Tên đăng nhập:</label></th>
+                            <td><input type="text" class="form-control" id="username" name="username"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="password">Mật khẩu:</label></th>
+                            <td><input type="text" class="form-control" id="password" name="password"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="newPassword">Mật khẩu mới:</label></th>
+                            <td><input type="text" class="form-control" id="newPassword" name="newPassword"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="retypeNewPassword">Nhập lại mật khẩu mới:</label></th>
+                            <td><input type="text" class="form-control" id="retypeNewPassword" name="retypeNewPassword"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <button type="submit" class="btn btn-primary my-3 me-3">Xác nhận</button>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

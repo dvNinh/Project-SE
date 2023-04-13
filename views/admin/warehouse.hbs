@@ -1,0 +1,174 @@
+<form name="container-form" class="mt-4" method="POST" action="/products/handle-form-actions">
+  <div>
+    <h3> Danh sách các sản phẩm </h3>
+    <!--{{#if deletedCount}} -->
+    <a href="/admin/oldBin"> Các sản phẩm đã xóa ({{deletedCount}})</a>
+
+    <!--{{/if}} -->
+
+    <div class="mt-4 d-flex align-items-center">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+        <label class="form-check-label" for="checkbox-all">
+          Chọn tất cả
+        </label>
+      </div>
+
+
+      <select class="form-control form-control-sm checkbox-select-all-options" id="exampleFormControlSelect1"
+        name="action" required>
+        <option value=""> -- Chọn hành động -- </option>
+        <option value="delete"> Xóa </option>
+        <option value="update"> Sửa </option>
+        <option value=""></option>
+        <option value=""></option>
+      </select>
+
+      <!--<button class="btn btn-primary btn-sm check-all-submit-btn" disabled>-->
+      <button class="btn btn-primary btn-sm check-all-submit-btn">
+        Thực hiện
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" colspan="2">#</th>
+        <th scope="col"> Sản phẩm </th>
+        <th scope="col"> Description </th>
+        <th scope="col"> Số lượng </th>
+        <th scope="col" colspan='2'></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each products}}
+      <tr>
+        <td>
+          <input class="form-check-input" type="checkbox" name="productIds[]" value="{{this._id}}" id="">
+        </td>
+
+        <th scope="row">{{sum @index 1}}</th> <!-- sum(index, 1)-->
+        <td> {{this.name}}</td>
+        <td> {{this.description}}</td>
+        <td> {{this.quantity}}</td>
+        <td>
+          <a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</button>
+            <a href="/products/{{this._id}}/delete" class="btn btn-link" data-toggle="modal"
+              data-target="#delete-product-modal" data-id="{{this._id}}">Xóa </a>
+        </td>
+      </tr>
+
+      {{else}}
+      <tr>
+        <td colspan="5" class="text-center">
+          Chưa có sản phẩm nào.
+          <a href="/products/create"> Tạo sản phẩm </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</form>
+
+<!-- Confirm delete product fdsgdsgdsg
+-->
+
+<div class="modal" id="delete-product-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Xóa sản phẩm?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p> Bạn chắc chắn muốn xóa sản phẩm này? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="btn-delete-product"> Xóa bỏ </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Hủy </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete hidden form -->
+
+<form name="delete-product-form" method="post">
+
+</form>
+
+
+
+<script>
+
+  // when dialog confirm clicked
+  document.addEventListener('DOMContentLoaded', function () {
+    var productId;
+    var deleteForm = document.forms['delete-product-form'];
+    var btnDeleteProduct = document.getElementById('btn-delete-product');
+    var checkboxAll = $('#checkbox-all');
+    var productItemCheckbox = $('input[name = "productIds[]"]');
+    var checkAllSubmitBtn = $('.check-all-submit-btn');
+    // var containerForm = document.forms['container-form'];
+    var containerForm = $('form[name="container-form"]');
+
+    //console.log(containerForm);
+
+    $('#delete-product-modal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var id = button.data('id'); // Extract info from data-* attributes
+      productId = id;
+      console.log("BUTTON CLICK");
+    });
+
+    // khi ấn xác định xóa
+
+    btnDeleteProduct.onclick = function () {
+      //alert(courseId);
+      deleteForm.action = '/products/' + courseId + '?_method=DELETE';
+      deleteForm.submit();
+    }
+
+    // when checkbox all checked
+    // xu ly checkbox
+
+    checkboxAll.change(function () {
+      var isCheckedAll = $(this).prop('checked');
+      /*
+      if(isCheckedAll) {
+        productItemCheckbox.prop('checked', true); // neu checkboxAll dc check thi checked all 
+      } else {
+        productItemCheckbox.prop('checked', false);
+      }*/
+      /*viet ngan hon*/
+      productItemCheckbox.prop('checked', isCheckedAll);
+    });
+
+
+    // productItemCheckbox changed
+    productItemCheckbox.change(function () {
+      var isCheckedAll_ = productItemCheckbox.length === $('input[name="productIds[]"]:checked').length;
+      checkboxAll.prop('checked', isCheckedAll_);
+    });
+
+
+    // rerender check all submit button
+    /*
+    courseItemCheckbox.change(function(){
+      var checkedCount = $('input[name="courseIds[]"]:checked').length;
+      if(checkedCount > 0) {
+          checkAllSubmitBtn.attr('disabled', false);
+      }
+      else {
+        checkAllSubmitBtn.attr('disabled', true);
+      }
+
+      //console.log(checkAllSubmitBtn);
+    }) */
+  });
+
+</script>

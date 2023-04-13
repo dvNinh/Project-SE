@@ -1,5 +1,5 @@
-const Account = require('../models/Account');
 const User = require('../models/User');
+const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
@@ -14,28 +14,18 @@ class AuthController {
             return res.render('login', { message: 'Chưa nhập tên đăng nhập' });
         if (!req.body.password)
             return res.render('login', { message: 'Chưa nhập mật khẩu' });
-
+            
         const formData = req.body;
-
-        Account.findOne(formData)
-            .then(account => {
-                if (!account) throw new Error('Tên đăng nhập hoặc mật khẩu không đúng');
-                return account.username;
-            })
-            .then(username => {
-                return User.findOne({ username });
-            })
+        User.findOne(formData)
             .then(user => {
+                if (!user) throw new Error('Tên đăng nhập hoặc mật khẩu không đúng');
                 req.session.regenerate(err => {
                     if (err) return next(err);
                     req.session.user = mongooseToObject(user);
-                    //req.session.account = mongooseToObject(account);
                     req.session.save(err => {
                         if (err) return next(err);
-                        //res.json(req.session.user);
                         res.redirect('/');
                     });
-                    //req.session.cart = user.cart;
                 });
             })
             .catch(next);
@@ -48,7 +38,7 @@ class AuthController {
     postRegister(req, res, next) {
         if (!req.body.username)
             return res.render('register', { message: 'Chưa nhập tên đăng nhập' });
-        if (!req.body.password)
+        if (!req.body.password) 
             return res.render('register', { message: 'Chưa nhập mật khẩu' });
         if (req.body.password !== req.body.retype)
             return res.render('register', { message: 'Mật khẩu nhập không khớp' });
@@ -57,19 +47,11 @@ class AuthController {
             username: req.body.username,
             password: req.body.password
         };
-        Account.findOne({ username: formData.username })
-            .then(account => {
-                if (account) throw new Error('Tên đăng nhập đã tồn tại');
-                else return formData;
-            })
-            .then(formData => {
-                const account = new Account(formData);
-                account.save();
-                return account.username;
-            })
-            .then(username => {
-                const user = new User({ username });
-                user.save();
+        User.findOne({ username: formData.username })
+            .then(user => {
+                if (user) throw new Error('Tên đăng nhập đã tồn tại');
+                const userCreate = new User(formData);
+                userCreate.save();
             })
             .then(() => res.redirect('/login'))
             .catch(next);
@@ -86,26 +68,31 @@ class AuthController {
         });
     }
 
-    getProfile(req, res, next) {
-        const username = req.session.user.username;
-        User.findOne({ username })
-            .then(user => {
-                res.render('profile/view', {
-                    user: mongooseToObject(user)
-                });
-            })
+    getChangePass(req, res, next) {
+        res.render('changePass');
+    }
+
+    postChangePass(req, res, next) {
+        if (!req.body.username || !req.body.password || !req.body.newPassword || !req.body.retypeNewPassword)
+            return res.render('change-pass', { message: 'Chưa nhập đầy đủ thông tin' });
+        if (req.body.newPassword !== req.body.retypeNewPassword)
+            return res.render('change-pass', { message: 'Mật khẩu nhập không khớp' });
+
+        User.findOneAndUpdate({ username: req.body.username, password: req.body.password }, { password: req.body.newPassword })
+            .then(() => res.redirect('/login'))
             .catch(next);
     }
 
+    getProfile(req, res, next) {
+        res.render('profile/view', {
+            user: req.session.user
+        });
+    }
+
     getUpdateProfile(req, res, next) {
-        const username = req.session.user.username;
-        User.findOne({ username })
-            .then(user => {
-                res.render('profile/update', {
-                    user: mongooseToObject(user)
-                });
-            })
-            .catch(next);
+        res.render('profile/update', {
+            user: req.session.user
+        });
     }
 
     postUpdateProfile(req, res, next) {
@@ -115,23 +102,43 @@ class AuthController {
     }
 
     showCart(req, res, next) {
-        var cartObject = { cart: req.session.user.cart };
+        // var cartObject = { cart: req.session.user.cart };
 
-        //res.json(cartObject);
+        // //res.json(cartObject);
 
-        Product.find({ '_id': { $in: cartObject } })
-            .then(products => {
-                //res.render('cart');
+        // Product.find({ '_id': { $in: cartObject } })
+        //     .then(products => {
+        //         //res.render('cart');
 
-                res.render('cart', {
-                    user: req.session.user,
-                    products: multipleMongooseToObject(products)
-                });
+        //         res.render('cart', {
+        //             user: req.session.user,
+        //             products: multipleMongooseToObject(products)
+        //         });
+        //     })
+        //     .catch(next => {
+        //         res.json('LỖI');
+        //     });
+
+        const username = req.session.user.username;
+        Cart.find({ username })
+            .then(carts => {
+                const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
+                Promise.all(promises)
+                    .then(products => {
+                        products = multipleMongooseToObject(products);
+                        carts = carts.map((cart, index) => {
+                            return {
+                                product: products[index],
+                                quantity: cart.quantity
+                            }
+                        });
+                        res.render('cart', {
+                            user: req.session.user,
+                            carts
+                        });
+                    })
             })
-            .catch(next => {
-                res.json('LỖI');
-            });
-
+            .catch(next)
     }
 }
 
