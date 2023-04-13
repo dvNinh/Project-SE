@@ -43,28 +43,8 @@ class ShopController {
     }
 
     getSearch(req,res,next) {
-        // var cartProduct;
-        // if (!req.session.cart) cartProduct = null;
-        // else {
-        //     var cart = new cart(req.session.cart);
-        //     cartProduct = cart.generateArray();
-        // }
         searchText = req.query.searchText !== undefined ? req.query.searchText : searchText;
 
-        // Product.createIndexes({}).catch(err => {
-        //     console.log(err);
-        // })
-        // Product.find({
-        //     $text: {$search: searchText}
-        // })
-        //  .countDocuments()
-        //  .then(numProduct => {
-        //     totalItems = numProduct
-        //     return Product.find({$text : {$search:searchText}})
-         //.skip((page - 1) *12)
-         //.limit(12);
-        //})
-          
         Product.find({name:{$regex:searchText}})
         .then(products => {
             res.render('search',{
