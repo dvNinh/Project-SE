@@ -67,8 +67,38 @@ class ShopController {
             .catch(next)
     }
 
+    edit(req, res, next) {
+        Product.findById(req.params.id)
+            .then(product => res.render('products/edit', {
+                product: mongooseToObject(product)
+            }))
+            .catch(next);
+    }
+
+    update(req, res, next) {
+        Product.updateOne({ _id: req.params.id }, req.body)
+            .then(() => res.redirect('admin/warehouse'))
+            .catch(next);
+    }
+
+    destroy(req, res, next) {
+
+        /*sofe delete*/
+        Product.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
     handleFormActions(req, res, next) {
-        res.render('Handle form action');
+        switch (req.body.action) {
+            case 'delete':
+                Product.delete({ _id: { $in: req.body.productIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+            default:
+                res.json({ message: 'Tính năng chưa được mở khóa' });
+        }
     }
 }
 
