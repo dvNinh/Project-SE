@@ -37,7 +37,6 @@ app.use(authRouter);
 const db = require('./config/db');
 db.connect();
 
-
 const port = 3000;
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

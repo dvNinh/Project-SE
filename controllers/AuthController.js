@@ -102,23 +102,6 @@ class AuthController {
     }
 
     showCart(req, res, next) {
-        // var cartObject = { cart: req.session.user.cart };
-
-        // //res.json(cartObject);
-
-        // Product.find({ '_id': { $in: cartObject } })
-        //     .then(products => {
-        //         //res.render('cart');
-
-        //         res.render('cart', {
-        //             user: req.session.user,
-        //             products: multipleMongooseToObject(products)
-        //         });
-        //     })
-        //     .catch(next => {
-        //         res.json('LỖI');
-        //     });
-
         const username = req.session.user.username;
         Cart.find({ username })
             .then(carts => {
@@ -128,17 +111,29 @@ class AuthController {
                         products = multipleMongooseToObject(products);
                         carts = carts.map((cart, index) => {
                             return {
+                                _id: cart._id,
                                 product: products[index],
-                                quantity: cart.quantity
+                                quantity: cart.quantity,
+                                price: products[index].price * cart.quantity
                             }
                         });
+                        var totalPrice = carts.reduce((accumulator, cart) => {
+                            return accumulator = accumulator + cart.price;
+                        }, 0);
                         res.render('cart', {
                             user: req.session.user,
-                            carts
+                            carts,
+                            totalPrice
                         });
                     })
             })
             .catch(next)
+    }
+    
+    deleteProductInCart(req, res, next) {
+        Cart.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
     }
 }
 

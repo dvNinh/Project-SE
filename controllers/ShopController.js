@@ -57,6 +57,7 @@ class ShopController {
         })
         .catch(err =>{console.log(err)})    
     }
+    
     addProductToCart(req, res, next) {
         const data = {
             username: req.session.user.username,
