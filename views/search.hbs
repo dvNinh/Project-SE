@@ -4,18 +4,20 @@
 
 <div class="product">
     <div class="container-sm">
+        <h1>Kết quả tìm kiếm cho '{{searchT}}'</h1>
         <div class="row pt-5">
-            {{#each product}}
+            {{!-- {{#if searchProduct.length}} --}}
+            {{#each searchProduct}}
             <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 col-xxl-3 p-2">
-                <img class="card-img-top w-100" src="{{product.image}}" alt="{{product.name}}">
+                <img class="card-img-top w-100" src="{{this.image}}" alt="{{this.name}}">
             </div>
 
             <div class="col-sm-12 col-md-6 col-lg-7 col-xl-8 col-xxl-9 p-2">
-                <p class="h3 card-title">{{product.name}}</p>
-                <p class="card-text pt-1">{{product.description}}</p>
-                <p class="h5 card-title" style="color: red;">Giá: {{product.price}} VNĐ</p>
-                <p class="h6 card-title pt-1 pb-3">Còn lại: {{product.quantity}}</p>
-                <a class="btn btn-primary" id="cartButton" data-id="{{product.name}}" href="cart">Thêm vào giỏ hàng</a>
+                <p class="h3 card-title">{{this.name}}</p>
+                <p class="card-text pt-1">{{this.description}}</p>
+                <p class="h5 card-title" style="color: red;">Giá: {{this.price}} VNĐ</p>
+                <p class="h6 card-title pt-1 pb-3">Còn lại: {{this.quantity}}</p>
+                <a class="btn btn-primary" id="cartButton" data-id="{{this.name}}" href="cart">Thêm vào giỏ hàng</a>
 
                 <script>
                     // Lấy được name của các sp khi click
@@ -30,14 +32,8 @@
 
             </div>
             {{/each}}
-        </div>
-
-        <div>
-            <h4>Chi tiết sản phẩm</h3>
-        </div>
-
-        <div>
-            <h4>Đánh giá</h3>
+            {{!-- {{else}}
+            <p>Không tìm thấy sản phẩm nào</p> --}}
         </div>
     </div>
 </div>
