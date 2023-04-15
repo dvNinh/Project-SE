@@ -7,6 +7,7 @@
         <div class="row pt-5">
             <h3 class="pb-2">Giỏ hàng</h3>
             {{#if carts}}
+        
             <table class="table table-striped table-hover table-bordered align-middle">
                 <thead>
                     <tr class="text-center">
@@ -19,24 +20,26 @@
                 </thead>
                 <tbody>
                     {{#each carts}}
-                    <tr>
-                        <td>
-                            <div class="row">
-                                <div class="col-2 col-md-1">
-                                    <img src="{{this.product.image}}" class="rounded-start w-100" alt="{{this.product.name}}">
-                                </div>
-                                <div class="col-10 col-md-11">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{this.product.name}}</h5>
+                        {{#if this.product}}
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2 col-md-1">
+                                            <img src="{{this.product.image}}" class="rounded-start w-100" alt="{{this.product.name}}">
+                                        </div>
+                                        <div class="col-10 col-md-11">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{this.product.name}}</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-end">{{this.product.price}}</td>
-                        <td class="text-center">{{this.quantity}}</td>
-                        <td class="text-end" style="color: red;"><b>{{this.price}}</b></td>
-                        <td><a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{this._id}}">Xóa</a></td>
-                    </tr>
+                                </td>
+                                <td class="text-end">{{this.product.price}}</td>
+                                <td class="text-center">{{this.quantity}}</td>
+                                <td class="text-end" style="color: red;"><b>{{this.price}}</b></td>
+                                <td><a href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{this._id}}">Xóa</a></td>
+                            </tr>
+                        {{/if}}
                     {{/each}}
                 </tbody>
             </table>
@@ -75,7 +78,6 @@
     confirmDeleteModal.addEventListener('show.bs.modal', event => {
         var button = event.relatedTarget;
         var id = button.getAttribute('data-id');
-
         var deleteBtn = document.getElementById('delete-btn');
         deleteBtn.onclick = () => { 
             deteleForm.action = `/cart/delete/${id}`;

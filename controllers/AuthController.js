@@ -14,7 +14,7 @@ class AuthController {
             return res.render('login', { message: 'Chưa nhập tên đăng nhập' });
         if (!req.body.password)
             return res.render('login', { message: 'Chưa nhập mật khẩu' });
-            
+
         const formData = req.body;
         User.findOne(formData)
             .then(user => {
@@ -38,7 +38,7 @@ class AuthController {
     postRegister(req, res, next) {
         if (!req.body.username)
             return res.render('register', { message: 'Chưa nhập tên đăng nhập' });
-        if (!req.body.password) 
+        if (!req.body.password)
             return res.render('register', { message: 'Chưa nhập mật khẩu' });
         if (req.body.password !== req.body.retype)
             return res.render('register', { message: 'Mật khẩu nhập không khớp' });
@@ -105,20 +105,39 @@ class AuthController {
         const username = req.session.user.username;
         Cart.find({ username })
             .then(carts => {
+                //res.json(carts);
+
                 const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
+                //res.json(promises);
                 Promise.all(promises)
                     .then(products => {
+
+                        //res.json(products);
+
                         products = multipleMongooseToObject(products);
                         carts = carts.map((cart, index) => {
-                            return {
-                                _id: cart._id,
-                                product: products[index],
-                                quantity: cart.quantity,
-                                price: products[index].price * cart.quantity
+                            const product = products[index];
+                            if (product) {
+                                return {
+                                    _id: cart._id,
+                                    product: products[index],
+                                    quantity: cart.quantity,
+                                    price: products[index].price * cart.quantity
+                                }
                             }
                         });
                         var totalPrice = carts.reduce((accumulator, cart) => {
-                            return accumulator = accumulator + cart.price;
+                            /*
+                            try {
+                                return accumulator = accumulator + cart.price;
+                            } catch (e) {
+                                return accumulator;
+                            }*/
+                            if (cart && cart.price) {
+                                return accumulator = accumulator + cart.price;
+                            }
+                            return accumulator;
+
                         }, 0);
                         res.render('cart', {
                             user: req.session.user,
@@ -129,7 +148,7 @@ class AuthController {
             })
             .catch(next)
     }
-    
+
     deleteProductInCart(req, res, next) {
         Cart.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))

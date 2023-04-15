@@ -42,22 +42,22 @@ class ShopController {
             .catch(next);
     }
 
-    getSearch(req,res,next) {
+    getSearch(req, res, next) {
         searchText = req.query.searchText !== undefined ? req.query.searchText : searchText;
 
-        Product.find({name:{$regex:searchText}})
-        .then(products => {
-            res.render('search',{
-                title: 'Kết quả tìm kiếm cho' + searchText,
-                user:req.user,
-                searchProducts: products,
-                searchT:searchText,
-                //cartProduct:cartProduct
+        Product.find({ name: { $regex: searchText } })
+            .then(products => {
+                res.render('search', {
+                    title: 'Kết quả tìm kiếm cho' + searchText,
+                    user: req.user,
+                    searchProducts: products,
+                    searchT: searchText,
+                    //cartProduct:cartProduct
+                })
             })
-        })
-        .catch(err =>{console.log(err)})    
+            .catch(err => { console.log(err) })
     }
-    
+
     addProductToCart(req, res, next) {
         const data = {
             username: req.session.user.username,
