@@ -86,6 +86,16 @@ class ShopController {
             .catch(next)
     }
 
+    oldBinProducts(req, res, next) {
+        Product.findDeleted({})
+            .then((products) =>
+                res.render('admin/oldBin', {
+                    products: multipleMongooseToObject(products),
+                }),
+            )
+            .catch(next)
+    }
+
     edit(req, res, next) {
         Product.findById(req.params.id)
             .then(product => res.render('products/edit', {
@@ -104,6 +114,12 @@ class ShopController {
 
         /*sofe delete*/
         Product.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    restore(req, res, next) {
+        Product.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }

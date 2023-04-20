@@ -2,7 +2,7 @@
   <div>
     <h3> Danh sách các sản phẩm </h3>
     <!--{{#if deletedCount}} -->
-    <a href="/admin/oldBin"> Các sản phẩm đã xóa ({{deletedCount}})</a>
+    <a href="/oldBin"> Các sản phẩm đã xóa ({{deletedCount}})</a>
 
     <!--{{/if}} -->
 
@@ -16,8 +16,8 @@
 
 
       <select class="form-control form-control-sm checkbox-select-all-options" id="exampleFormControlSelect1"
-        name="action" required>
-        <option value=""> -- Chọn hành động -- </option>
+        name="action" >
+        {{!-- required> --}}
         <option value="delete"> Xóa </option>
         <option value="update"> Sửa </option>
         <option value=""></option>
@@ -55,8 +55,7 @@
         <td> {{this.quantity}}</td>
         <td>
           <a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</button>
-            <a href="/products/{{this._id}}/delete" class="btn btn-link" data-toggle="modal"
-              data-target="#delete-product-modal" data-id="{{this._id}}">Xóa </a>
+          {{!-- <button class="btn btn-link" data-toggle="modal" data-target="#delete-product-modal" data-id = "{{this._id}}">Xóa</button> --}}
         </td>
       </tr>
 
@@ -97,7 +96,7 @@
 
 <!-- Delete hidden form -->
 
-<form name="delete-product-form" method="post">
+<form name="delete-product-form" method="post" action = "/products/{{this._id}}/delete">
 
 </form>
 
@@ -128,8 +127,8 @@
     // khi ấn xác định xóa
 
     btnDeleteProduct.onclick = function () {
-      //alert(courseId);
-      deleteForm.action = '/products/' + courseId + '?_method=DELETE';
+      //alert(productId);
+      deleteForm.action = '/products/' + productId + '?_method=DELETE';
       deleteForm.submit();
     }
 
@@ -158,8 +157,8 @@
 
     // rerender check all submit button
     /*
-    courseItemCheckbox.change(function(){
-      var checkedCount = $('input[name="courseIds[]"]:checked').length;
+    productItemCheckbox.change(function(){
+      var checkedCount = $('input[name="productIds[]"]:checked').length;
       if(checkedCount > 0) {
           checkAllSubmitBtn.attr('disabled', false);
       }

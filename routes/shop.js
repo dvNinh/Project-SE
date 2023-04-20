@@ -8,13 +8,14 @@ router.get('/home', shopController.getHome);
 router.get('/shop/create', shopController.create);
 router.post('/shop/store', shopController.store);
 
-router.get('/warehouse', shopController.warehouseProducts);
-
+router.get('/shop/warehouse', shopController.warehouseProducts);
+router.get('/oldBin', shopController.oldBinProducts)
 router.post('/products/handle-form-actions', shopController.handleFormActions);
 router.get('/products/:id/edit', shopController.edit);
-router.get('/products/:id/delete', shopController.destroy);
-
+router.delete('/products/:id/delete', shopController.destroy);
+router.patch('/products/:id/restore', shopController.restore);
 router.put('/:id', ShopController.update);
+
 
 router.get('/product/add-to-cart/:id', shopController.addProductToCart);
 router.get('/products/:slug', shopController.getProduct);

@@ -1,0 +1,113 @@
+<div class="mt-4 ml-4 mr-4">
+    <h3> Các sản phẩm đã ngừng bán </h3>
+    <a href = "/shop/warehouse"> Danh sách sản đang bán</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col"> Tên sản phẩm </th>
+            <th scope="col"> Description </th>
+            <th scope="col"> Thời gian xóa </th>
+            <th scope="col" colspan = '2'></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each products}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th> <!-- sum(index, 1)-->
+                    <td> {{this.name}}</td>
+                    <td> {{this.description}}</td>
+                    <td> {{this.deletedAt}}</td>
+                    <td> 
+                        <a href="" class="btn btn-link btn-restore" data-id = {{this._id}}> Khôi phục </button>
+                        <a href="/products/{{this._id}}/edit" class="btn btn-link" data-toggle="modal" data-target="#delete-product-modal" data-id = "{{this._id}}">Xóa vĩnh viễn</button>
+                    </td>
+                </tr>
+
+                {{else}}
+                <tr>
+                   <td colspan="5" class = "text-center">
+                        Thùng rác trống. 
+                    <a href = "/shop/warehouse"> Danh sách sản phẩm đang bán </a>
+                  </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Confirm delete product 
+-->
+
+<div class="modal"  id="delete-product-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Xóa vĩnh viễn?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p> Hành động này không thể khổi phục. Bạn chắc chắn muốn xóa vĩnh viễn sản phẩm này? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id = "btn-delete-product"> Xóa bỏ </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Hủy </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Restore hidden form -->
+
+<form name = "restore-product-form" method="post">
+   
+</form>
+
+<form name = "delete-product-form" method="post">
+   
+</form>
+
+
+
+<script>
+
+    // when dialog confirm clicked
+    document.addEventListener('DOMContentLoaded', function() {
+        var productId;
+        var restoreForm = document.forms['restore-product-form'];
+        var deleteForm = document.forms['delete-product-form'];
+
+        var btnDeleteProduct = document.getElementById('btn-delete-product');
+        var restoreBtn = $('.btn-restore');
+
+      
+        $('#delete-product-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            productId = id;
+        });
+
+        // khi ấn xác định xóa
+        
+        btnDeleteProduct.onclick = function() {
+            //alert(productId);
+            deleteForm.action = '/products/' + productId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        // restoreBtn click
+        restoreBtn.click(function(e) {
+            e.preventDefault();  // xóa bỏ hành vi mặc định của thẻ đang được click
+            var productId = $(this).data('id');
+            //console.log($(this).data('id'));
+
+            restoreForm.action = '/products/' + productId + '/restore?_method=PATCH';
+            restoreForm.submit();
+        })
+    });
+    
+</script>
