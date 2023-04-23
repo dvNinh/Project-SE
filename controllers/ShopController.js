@@ -50,7 +50,7 @@ class ShopController {
                 res.render('search', {
                     title: 'Kết quả tìm kiếm cho' + searchText,
                     user: req.user,
-                    searchProducts: products,
+                    searchProducts: multipleMongooseToObject(products),
                     searchT: searchText,
                     //cartProduct:cartProduct
                 })
@@ -134,6 +134,9 @@ class ShopController {
             default:
                 res.json({ message: 'Tính năng chưa được mở khóa' });
         }
+    }
+    getPayment(req,res,next) {
+        res.render('payment')
     }
 }
 module.exports = new ShopController;

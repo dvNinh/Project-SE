@@ -72,6 +72,40 @@
 
 <form name="detele-form" method="post"></form>
 
+
+<div class="tt-shopcart-col">
+            <div class="row">
+              <div class="col-md-6 col-lg-4"></div>
+              <div class="col-md-6 col-lg-4"></div>
+              <div class="col-md-6 col-lg-4">
+                <div class="tt-shopcart-box tt-boredr-large">
+                  <table class="tt-shopcart-table01 box-pricett">
+                    <tbody>
+                      <tr>
+                        <th>Tổng hàng</th>
+                        {{!-- <td>$<%= cart.totalPrice %></td> --}}
+                        {{!-- <th>Phí ship</th> --}}
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Tổng tiền</th>
+                        {{!-- <td>$<%= session.cart.totalPrice %></td> --}}
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <a href="/payment" class="btn btn-lg">
+                    <span class="icon icon-check_circle"></span>Chấp nhận thanh toán
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 <script type="text/javascript">
     var confirmDeleteModal = document.getElementById('confirmDeleteModal');
     var deteleForm = document.forms['detele-form'];

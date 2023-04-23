@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>Thanh toán</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="header" style="height: 56px;">
+    {{> header}}
+    </div>
+
+	<div class="container">
+		<h1 class="mt-5">Thanh toán</h1>
+		<hr>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label for="firstName">Họ tên</label>
+				<input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+				<div class="invalid-feedback">
+					Valid first name is required.
+				</div>
+			</div>
+			<div class="col-md-6 mb-3">
+				<label for="phone">Số điện thoại</label>
+				<input type="text" class="form-control" placeholder="">
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<label for="address">Địa chỉ</label>
+			<input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ" required>
+			<div class="invalid-feedback">
+				Please enter your shipping address.
+			</div>
+		</div>
+
+        <div>Tổng số tiền cần thanh toán</div>
+		<hr class="mb-4">
+
+		<button class="btn btn-primary btn-lg btn-block" type="submit">Thanh toán</button>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper
