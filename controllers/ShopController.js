@@ -1,8 +1,10 @@
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
+var users = require('../models/User')
+const Comment = require('../models/Comment');
+
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
-var users = require('../models/User')
 
 var searchText;
 
@@ -44,10 +46,14 @@ class ShopController {
     getProduct(req, res, next) {
         Product.findOne({ slug: req.params.slug })
             .then(product => {
-                res.render('products/show', {
-                    user: req.session.user,
-                    product: mongooseToObject(product)
-                });
+                Comment.find({ productId: product._id })
+                    .then(comments => {
+                        res.render('products/show', {
+                            user: req.session.user,
+                            product: mongooseToObject(product),
+                            comments: multipleMongooseToObject(comments)
+                        });
+                    });
             })
             .catch(next);
     }
@@ -184,8 +190,22 @@ class ShopController {
                 res.json({ message: 'Tính năng chưa được mở khóa' });
         }
     }
+
     getPayment(req, res, next) {
-        res.render('payment')
+        res.render('payment');
+    }
+
+    productRating(req, res, next) {
+        const formData = {
+            username: req.session.user.username,
+            userAvatar: req.session.user.avatar,
+            productId: req.params.id,
+            content: req.body.content,
+            star: req.body.star
+        }
+        const comment = new Comment(formData);
+        comment.save();
+        res.redirect('back');
     }
 }
 module.exports = new ShopController;

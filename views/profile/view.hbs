@@ -5,7 +5,8 @@
 <div class="profile">
     <div class="container-sm">
         <div class="row py-5 px-3">
-            <div class="col-12 col-sm-12 col-md-9 col-lg-6 col-xl-5">
+            <div class="col-0 col-lg-1 col-xl-2"></div>
+            <div class="col-12 col-sm-12 col-md-9 col-lg-8 col-xl-6">
                 <p class="h3 pb-3">Thông tin người dùng</p>
                 <table class="table table-borderless align-middle">
                     <tr>
@@ -35,10 +36,14 @@
                 <img class="w-100" src="{{user.avatar}}" alt="{{user.username}} avatar">
             </div>
 
-            <div class="col-8 col-sm-7 col-md-12 col-lg-4 col-xl-5">
-                <a href="/change-pass">Đổi mật khẩu</a>
-                <br>
-                <a href="/profile/update">Cập nhật thông tin</a>
+
+            <div class="col-8 col-sm-7 col-md-12 row">
+                <div class="col-0 col-lg-1 col-xl-2"></div>
+                <div class="col-8 col-sm-7 col-md-12 col-lg-11 col-xl-10">
+                    <a href="/profile/update">Cập nhật thông tin</a>
+                    <br>
+                    <a href="/change-pass">Đổi mật khẩu</a>
+                </div>
             </div>
         </div>
     </div>

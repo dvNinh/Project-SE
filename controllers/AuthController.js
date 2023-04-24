@@ -97,7 +97,17 @@ class AuthController {
 
     postUpdateProfile(req, res, next) {
         User.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/profile/view'))
+            .then(() => User.findOne({ _id: req.params.id }))
+            .then(user => {
+                req.session.regenerate(err => {
+                    if (err) return next(err);
+                    req.session.user = mongooseToObject(user);
+                    req.session.save(err => {
+                        if (err) return next(err);
+                        res.redirect('/profile/view');
+                    });
+                });
+            })
             .catch(next);
     }
 

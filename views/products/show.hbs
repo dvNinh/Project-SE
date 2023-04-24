@@ -14,28 +14,88 @@
                 <p class="card-text pt-1">{{product.description}}</p>
                 <p class="h5 card-title" style="color: red;">Giá: {{product.price}} VNĐ</p>
                 <p class="h6 card-title pt-1 pb-3">Còn lại: {{product.quantity}}</p>
-                <a class="btn btn-primary" id="cartButton" data-id="{{product.name}}" href="cart">Thêm vào giỏ hàng</a>
-
-                <script>
-                    // Lấy được name của các sp khi click
-                    var button = document.getElementById("cartButton")
-                    var myList = []
-                    button.addEventListener("click", function() {
-                        var id = button.getAttribute("data-id")
-                        myList.push(id)
-                        console.log(myList)
-                    })
-                </script>
-
+                <a class="btn btn-primary" id="cartButton" data-id="{{product.name}}" href="/product/add-to-cart/{{product._id}}">Thêm vào giỏ hàng</a>
             </div>
         </div>
 
         <div>
-            <h4>Chi tiết sản phẩm</h3>
+            <h4 class="py-3">Chi tiết sản phẩm</h3>
         </div>
 
-        <div>
-            <h4>Đánh giá</h3>
+        <div class="mb-5">
+            <h4 class="py-3">Đánh giá</h3>
+            <form class="ms-3" action="/product/rating/{{product._id}}" method="post">
+                <div class="rating mb-2 d-flex align-items-center">
+                    <p class="m-0 me-3" style="display: inline;">Đánh giá sản phẩm này:</p>
+                    <span class="star-1 px-1" style="cursor: pointer; font-size: 20px; -webkit-user-select: none; user-select: none;">&#9733;</span>
+                    <span class="star-2 px-1" style="cursor: pointer; font-size: 20px; -webkit-user-select: none; user-select: none;">&#9733;</span>
+                    <span class="star-3 px-1" style="cursor: pointer; font-size: 20px; -webkit-user-select: none; user-select: none;">&#9733;</span>
+                    <span class="star-4 px-1" style="cursor: pointer; font-size: 20px; -webkit-user-select: none; user-select: none;">&#9733;</span>
+                    <span class="star-5 px-1" style="cursor: pointer; font-size: 20px; -webkit-user-select: none; user-select: none;">&#9733;</span>
+                    <p class="m-0 ms-3 star-description"></p>
+                </div>
+                <div class="comment-content d-flex align-items-center">
+                    <img src={{user.avatar}} class="rounded-circle" width="50" height="50" loading="lazy"/>
+                    <input type="text" class="form-control mx-3 p-1" id="content" name="content" placeholder="Viết bình luận" size="auto">
+                    <input type="hidden" class="form-control" id="star" name="star">
+                    <button class="btn btn-primary" type="submit">Gửi</button>
+                </div>    
+            </form>
+            
+            <div class="comments row-cols-1 mt-5">
+                {{#each comments}}
+                <div class="d-flex align-items-center mt-2">
+                    <img src={{this.userAvatar}} class="rounded-circle" width="40" height="40" loading="lazy"/>
+                    <h6 class="m-0 mx-3">
+                        <div class="comment-user">{{this.username}}</div>
+                        <div class="comment-rating">{{this.star}}</div>
+                    </h6>
+                    <p class="m-0 commemnt-content">{{this.content}}</p>
+                </div>
+                {{/each}}
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    var starRate = 5;
+
+    const star_1 = document.querySelector('.star-1');
+    const star_2 = document.querySelector('.star-2');
+    const star_3 = document.querySelector('.star-3');
+    const star_4 = document.querySelector('.star-4');
+    const star_5 = document.querySelector('.star-5');
+
+    var starArr = [ star_1, star_2, star_3, star_4, star_5 ];
+    var starDescriptions = [ 'Tệ', 'Không tốt', 'Bình thường', 'Tốt', 'Tuyệt vời!' ];
+
+    function setStar() {
+        for (var i = 0; i < starRate; i++) starArr[i].style.color = '#fbc634';
+        for (var i = starRate; i < 5; i++) starArr[i].style.color = 'black';
+        document.querySelector('.star-description').innerHTML = starDescriptions[starRate - 1];
+        document.querySelector('input[name="star"]').value = starRate;
+    }
+
+    setStar();
+
+    starArr.forEach((star, index) => {
+        star.onclick = () => {
+            starRate = index + 1;
+            setStar();
+        };
+    });
+
+    function setStarInComment() {
+        const commentRating = document.querySelectorAll('.comment-rating');
+        commentRating.forEach(value => {
+            var rating = parseInt(value.innerHTML);
+            var html = '';
+            for (var i = 0; i < rating; i++) html += '<span class="" style="color: #fbc634; -webkit-user-select: none; user-select: none;">&#9733;</span>';
+            for (var i = rating; i < 5; i++) html += '<span class="" style="color: black; -webkit-user-select: none; user-select: none;">&#9733;</span>';
+            value.innerHTML = html;
+        });
+    }
+
+    setStarInComment();
+</script>
