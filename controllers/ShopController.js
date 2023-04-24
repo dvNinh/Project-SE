@@ -19,10 +19,20 @@ class ShopController {
     }
 
     create(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
         res.render('products/create');
     }
 
     store(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
         const formData = req.body;
         const product = new Product(formData);
         product.save()
@@ -61,7 +71,8 @@ class ShopController {
     addProductToCart(req, res, next) {
         const data = {
             username: req.session.user.username,
-            productId: req.params.id
+            productId: req.params.id,
+            role: req.params.role
         };
         Cart.findOne(data)
             .then(cart => {
@@ -75,28 +86,44 @@ class ShopController {
     }
 
     warehouseProducts(req, res, next) {
-        Promise.all([Product.find({}), Product.countDocumentsDeleted()])
-            .then(
-                ([products, deleteCount]) =>
-                res.render('admin/warehouse', {
-                    deleteCount,
-                    products: multipleMongooseToObject(products)
-                })
-            )
-            .catch(next)
+        const userRole = req.session.user.role;
+        if (userRole == 'admin') {
+            Promise.all([Product.find({}), Product.countDocumentsDeleted()])
+                .then(
+                    ([products, deleteCount]) =>
+                    res.render('admin/warehouse', {
+                        deleteCount,
+                        products: multipleMongooseToObject(products)
+                    })
+                )
+                .catch(next)
+        } else {
+            res.json('Bạn không có quyền truy cập chức năng này')
+        }
     }
 
     oldBinProducts(req, res, next) {
-        Product.findDeleted({})
-            .then((products) =>
-                res.render('admin/oldBin', {
-                    products: multipleMongooseToObject(products),
-                }),
-            )
-            .catch(next)
+        const userRole = req.session.user.role;
+        if (userRole == 'admin') {
+            Product.findDeleted({})
+                .then((products) =>
+                    res.render('admin/oldBin', {
+                        products: multipleMongooseToObject(products),
+                    }),
+                )
+                .catch(next)
+        } else {
+            res.json('Bạn không có quyền truy cập chức năng này')
+        }
     }
 
     edit(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
+
         Product.findById(req.params.id)
             .then(product => res.render('products/edit', {
                 product: mongooseToObject(product)
@@ -105,12 +132,23 @@ class ShopController {
     }
 
     update(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
+
         Product.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect('admin/warehouse'))
             .catch(next);
     }
 
     destroy(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
 
         /*sofe delete*/
         Product.delete({ _id: req.params.id })
@@ -119,12 +157,23 @@ class ShopController {
     }
 
     restore(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
         Product.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }
 
     handleFormActions(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
+
         switch (req.body.action) {
             case 'delete':
                 Product.delete({ _id: { $in: req.body.productIds } })
@@ -135,7 +184,7 @@ class ShopController {
                 res.json({ message: 'Tính năng chưa được mở khóa' });
         }
     }
-    getPayment(req,res,next) {
+    getPayment(req, res, next) {
         res.render('payment')
     }
 }

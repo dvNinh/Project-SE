@@ -1,3 +1,6 @@
+<script> 
+	var users = require('../models/User') 
+</script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/">Navbar</a>
@@ -50,9 +53,10 @@
 							<a class="dropdown-item" href="/cart">Giỏ hàng</a>
 					</li>
 
-					{{#if (user.role == 'admin')}}
-						<li><a class="dropdown-item" href="/warehouse"> Các sản phẩm đang bán</a></li>
+					{{#if (myEqual user.role 'admin')}}
+						<li><a class="dropdown-item" href="/admin/warehouse"> Các sản phẩm đang bán</a></li>
 						<li><a class="dropdown-item" href="/oldBin"> Các sản phẩm đã ngừng bán</a></li>
+						<li><a class="dropdown-item" href="/shop/create"> Tạo sản phẩm mới</a></li>
 					{{/if}}
 				</ul>
 			</div>

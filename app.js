@@ -24,6 +24,7 @@ app.engine('hbs', handlebars.engine({
     extname: '.hbs',
     helpers: {
         sum: (a, b) => a + b, // tạo function cộng
+        myEqual: (a, b) => a == b ? true : false
     }
 }));
 app.set('view engine', 'hbs');

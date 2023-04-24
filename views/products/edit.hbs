@@ -1,7 +1,7 @@
 <div class="mt-4 ml-4 mr-4" style = "margin: 2.0rem">
     <h3> Chỉnh sửa sản phẩm </h3>
 
-    <form class = "mt-4 ml-4 mr-4" method="post" action = "/products/{{product._id}}?_method=PUT">
+    <form class = "mt-4 ml-4 mr-4" method="post" action = "/{{product._id}}?_method=PUT">
          <div class="form-group">
             <label for="name"> Name </label>
             <input type="text" class="form-control" value = "{{product.name}}" id="description" name = "name">  
