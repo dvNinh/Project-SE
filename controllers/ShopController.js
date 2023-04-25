@@ -191,10 +191,6 @@ class ShopController {
         }
     }
 
-    getPayment(req, res, next) {
-        res.render('payment');
-    }
-
     productRating(req, res, next) {
         const formData = {
             username: req.session.user.username,

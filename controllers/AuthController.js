@@ -149,10 +149,26 @@ class AuthController {
                             return accumulator;
 
                         }, 0);
+
+                        var totalQuantity = carts.reduce((sum = 0, cart) => {
+                            /*
+                            try {
+                                return accumulator = accumulator + cart.price;
+                            } catch (e) {
+                                return accumulator;
+                            }*/
+                            if (cart && cart.quantity) {
+                                return sum = sum + cart.quantity;
+                            }
+                            return sum;
+
+                        }, 0);
+
                         res.render('cart', {
                             user: req.session.user,
                             carts,
-                            totalPrice
+                            totalPrice,
+                            totalQuantity
                         });
                     })
             })
@@ -163,6 +179,55 @@ class AuthController {
         Cart.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
+    }
+
+    getPayment(req, res, next) {
+        const username = req.session.user.username;
+        Cart.find({ username })
+            .then(carts => {
+                //res.json(carts);
+
+                const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
+                //res.json(promises);
+                Promise.all(promises)
+                    .then(products => {
+
+                        //res.json(products);
+
+                        products = multipleMongooseToObject(products);
+                        carts = carts.map((cart, index) => {
+                            const product = products[index];
+                            if (product) {
+                                return {
+                                    _id: cart._id,
+                                    product: products[index],
+                                    quantity: cart.quantity,
+                                    price: products[index].price * cart.quantity
+                                }
+                            }
+                        });
+                        var totalPrice = carts.reduce((accumulator, cart) => {
+                            /*
+                            try {
+                                return accumulator = accumulator + cart.price;
+                            } catch (e) {
+                                return accumulator;
+                            }*/
+                            if (cart && cart.price) {
+                                return accumulator = accumulator + cart.price;
+                            }
+                            return accumulator;
+
+                        }, 0);
+
+                        res.render('payment', {
+                            user: req.session.user,
+                            carts,
+                            totalPrice,
+                        });
+                    })
+            })
+            .catch(next)
     }
 }
 
