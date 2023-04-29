@@ -5,6 +5,7 @@ const Comment = require('../models/Comment');
 
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
+const order = require('../models/order');
 
 var searchText;
 
@@ -67,8 +68,7 @@ class ShopController {
                     title: 'Kết quả tìm kiếm cho' + searchText,
                     user: req.user,
                     searchProducts: multipleMongooseToObject(products),
-                    searchT: searchText,
-                    //cartProduct:cartProduct
+                    searchT: searchText
                 })
             })
             .catch(err => { console.log(err) })
@@ -202,6 +202,16 @@ class ShopController {
         const comment = new Comment(formData);
         comment.save();
         res.redirect('back');
+    }
+    exportOrder(req,res,next) {
+        const data = {
+            name: req.body.fullName,
+            phoneNumber: req.body.phoneNumber,
+            date: req.body.Date,
+            address: req.body.address
+        }
+        const userOrder = new order(data);
+        userOrder.save();
     }
 }
 module.exports = new ShopController;

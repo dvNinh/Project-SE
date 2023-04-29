@@ -20,6 +20,8 @@ router.get('/product/add-to-cart/:id', shopController.addProductToCart);
 router.get('/products/:slug', shopController.getProduct);
 router.post('/product/rating/:id', shopController.productRating);
 
+router.post('/payment', shopController.exportOrder);
+
 router.get('/search', shopController.getSearch);
 router.get('/', shopController.getHome);
 
