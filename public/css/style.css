@@ -1,0 +1,22 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(187, 184, 184);
+    color: white;
+    text-align: center;
+}
+
+
+/* header {
+    padding-left: 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    margin-bottom: 10vw;
+    text-align: left;
+    width: 70vw;
+    color: rgb(47, 131, 209);
+} */
