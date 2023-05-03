@@ -13,6 +13,8 @@ router.get('/oldBin', shopController.oldBinProducts)
 router.post('/products/handle-form-actions', shopController.handleFormActions);
 router.get('/products/:id/edit', shopController.edit);
 router.delete('/products/:id/delete', shopController.destroy);
+router.delete('/products/:id/force', shopController.forceDestroy);
+
 router.patch('/products/:id/restore', shopController.restore);
 router.put('/:id', ShopController.update);
 

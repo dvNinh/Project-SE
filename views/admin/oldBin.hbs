@@ -1,6 +1,11 @@
-<div class="mt-4 ml-4 mr-4">
+<div class="header" style="height: 56px;">
+    {{> header02}}
+</div>
+
+
+<div class="mt-4">
     <h3> Các sản phẩm đã ngừng bán </h3>
-    <a href = "admin/warehouse"> Danh sách sản đang bán</a>
+    <a href = "/admin/warehouse"> Danh sách các sản phẩm đang bán </a>
 
     <table class="table">
         <thead>
@@ -21,8 +26,11 @@
                     <td> {{this.description}}</td>
                     <td> {{this.deletedAt}}</td>
                     <td> 
-                        <a href="" class="btn btn-link btn-restore" data-id = {{this._id}}> Khôi phục </button>
-                        <a href="/products/{{this._id}}/edit" class="btn btn-link" data-toggle="modal" data-target="#delete-product-modal" data-id = "{{this._id}}">Xóa vĩnh viễn</button>
+                        <a href="" class="btn btn-link btn-restore" data-id = {{this._id}}> Khôi phục </a>
+                        <a href="" class="btn btn-link btn-delete-product" data-id = {{this._id}}> Xóa vĩnh viễn </a>
+                        {{!-- <a href="" class="btn btn-link btn-delete-product" data-toggle="modal" data-target="#delete-product-modal" data-id = {{this._id}}>
+                          Xóa vĩnh viễn
+                        </a> --}}
                     </td>
                 </tr>
 
@@ -30,7 +38,7 @@
                 <tr>
                    <td colspan="5" class = "text-center">
                         Thùng rác trống. 
-                    <a href = "/shop/warehouse"> Danh sách sản phẩm đang bán </a>
+                    <a href = "/admin/warehouse"> Danh sách các sản phẩm đang bán </a>
                   </td>
                 </tr>
             {{/each}}
@@ -40,8 +48,28 @@
 
 <!-- Confirm delete product 
 -->
+{{!-- // temporary
+<div class="modal fade" id="delete-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Xóa vĩnh viễn? </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p> Hành động này không thể khổi phục. Bạn chắc chắn muốn xóa vĩnh viễn sản phẩm này? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id = "btn-delete-product"> Xóa bỏ</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> --}}
 
-<div class="modal"  id="delete-product-modal" tabindex="-1" role="dialog">
+{{!-- <div class="modal"  id="delete-product-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -59,7 +87,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 
 <!-- Restore hidden form -->
 
@@ -67,11 +95,13 @@
    
 </form>
 
-<form name = "delete-product-form" method="post">
+{{!-- <form name = "delete-product-form" method="post">
    
+</form> --}}
+
+<form name="delete-product-form" method="post">
+
 </form>
-
-
 
 <script>
 
@@ -81,23 +111,23 @@
         var restoreForm = document.forms['restore-product-form'];
         var deleteForm = document.forms['delete-product-form'];
 
-        var btnDeleteProduct = document.getElementById('btn-delete-product');
+        var btnDeleteproduct = $('.btn-delete-product');
         var restoreBtn = $('.btn-restore');
 
       
-        $('#delete-product-modal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            productId = id;
-        });
+        //$('#delete-product-modal').on('show.bs.modal', function (event) {
+          //  var button = $(event.relatedTarget); // Button that triggered the modal
+            //var id = button.data('id'); // Extract info from data-* attributes
+            //productId = id;
+        //});
 
         // khi ấn xác định xóa
         
-        btnDeleteProduct.onclick = function() {
+        //btnDeleteproduct.onclick = function() {
             //alert(productId);
-            deleteForm.action = '/products/' + productId + '/force?_method=DELETE';
-            deleteForm.submit();
-        }
+            //deleteForm.action = '/products/' + productId + '/force?_method=DELETE';
+            //deleteForm.submit();
+        //}
 
         // restoreBtn click
         restoreBtn.click(function(e) {
@@ -107,6 +137,15 @@
 
             restoreForm.action = '/products/' + productId + '/restore?_method=PATCH';
             restoreForm.submit();
+        })
+
+        btnDeleteproduct.click(function(e) {
+            e.preventDefault();  // xóa bỏ hành vi mặc định của thẻ đang được click
+            var productId = $(this).data('id');
+            //console.log($(this).data('id'));
+
+            deleteForm.action = '/products/' + productId + '/force?_method=DELETE';
+            deleteForm.submit();
         })
     });
     

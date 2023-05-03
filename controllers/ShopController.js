@@ -98,6 +98,7 @@ class ShopController {
                 .then(
                     ([products, deleteCount]) =>
                     res.render('admin/warehouse', {
+                        user: req.session.user,
                         deleteCount,
                         products: multipleMongooseToObject(products)
                     })
@@ -114,6 +115,7 @@ class ShopController {
             Product.findDeleted({})
                 .then((products) =>
                     res.render('admin/oldBin', {
+                        user: req.session.user,
                         products: multipleMongooseToObject(products),
                     }),
                 )
@@ -162,6 +164,19 @@ class ShopController {
             .catch(next);
     }
 
+    //DELETE /product/:id/force
+    forceDestroy(req, res, next) {
+        const userRole = req.session.user.role;
+        if (userRole != 'admin') {
+            res.json('Bạn không có quyền truy cập chức năng này');
+            return;
+        }
+
+        Product.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
     restore(req, res, next) {
         const userRole = req.session.user.role;
         if (userRole != 'admin') {
@@ -203,7 +218,7 @@ class ShopController {
         comment.save();
         res.redirect('back');
     }
-    exportOrder(req,res,next) {
+    exportOrder(req, res, next) {
         const data = {
             name: req.body.fullName,
             phoneNumber: req.body.phoneNumber,

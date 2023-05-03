@@ -23,11 +23,11 @@
                         </tr>
                         <tr>
                             <th><label for="email">Email:</label></th>
-                            <td><input type="text" class="form-control" id="email" name="email" value="{{user.email}}"></td>
+                            <td><input type="email" class="form-control" id="email" name="email" value="{{user.email}}"></td>
                         </tr>
                         <tr>
                             <th><label for="phoneNumber">Số điện thoại:</label></th>
-                            <td><input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}"></td>
+                            <td><input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}"></td>
                         </tr>
                         <tr>
                             <th></th>
