@@ -208,7 +208,8 @@ class ShopController {
             name: req.body.fullName,
             phoneNumber: req.body.phoneNumber,
             date: req.body.Date,
-            address: req.body.address
+            address: req.body.address,
+            cart: req.session.user.cart
         }
         const userOrder = new order(data);
         userOrder.save();
