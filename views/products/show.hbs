@@ -24,6 +24,7 @@
 
         <div class="mb-5">
             <h4 class="py-3">Đánh giá</h3>
+            {{#if user}}
             <form class="ms-3" action="/product/rating/{{product._id}}" method="post">
                 <div class="rating mb-2 d-flex align-items-center">
                     <p class="m-0 me-3" style="display: inline;">Đánh giá sản phẩm này:</p>
@@ -41,6 +42,10 @@
                     <button class="btn btn-primary" type="submit">Gửi</button>
                 </div>    
             </form>
+            {{else}}
+            <p class="m-0 ms-3" style="display: inline;">Đăng nhập để đánh giá sản phẩm này:</p>
+            <a href="/login">Đăng nhập</a>
+            {{/if}}
             
             <div class="comments row-cols-1 mt-5">
                 {{#each comments}}

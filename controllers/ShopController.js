@@ -1,6 +1,5 @@
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
-var users = require('../models/User')
 const Comment = require('../models/Comment');
 
 const { multipleMongooseToObject } = require('../util/mongoose');
@@ -75,6 +74,7 @@ class ShopController {
     }
 
     addProductToCart(req, res, next) {
+        if (!req.session.user) return res.redirect('/login');
         const data = {
             username: req.session.user.username,
             productId: req.params.id,

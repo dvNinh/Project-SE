@@ -1,16 +1,20 @@
-<div class="login-box">
-    <h1>Đăng nhập</h1>
-    {{#if message}}
-        <div class="message">{{message}}</div>
-    {{/if}}
-    <form method="post" action="/login">
-        <label for="username">Tên đăng nhập:</label><br>
-        <input id="username" name="username" type="text"><br>
-        <label for="password">Mật khẩu:</label><br>
-        <input id="password" name="password" type="text"><br>
-        <input type="submit" value="Đăng nhập">
-    </form>
-    <a href="#">Quên mật khẩu?</a><br>
-    <p>Chưa có tài khoản?</p>
-    <a href="/register">Đăng kí</a>
+<div class="login">
+    <div class="container-sm">
+        <div class="row py-5 px-3">
+            <div class="col-0 col-md-1 col-lg-2 col-xl-3"></div>
+            <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-6">
+                <h2 class="mt-5">Đăng nhập</h2>
+                <div class="message mt-3">
+                    {{#if message}}{{message}}{{/if}}
+                </div>
+                <form method="post" action="/login">
+                    <input class="form-control mt-3" id="username" name="username" type="text" placeholder="Tên đăng nhập">
+                    <input class="form-control mt-3" id="password" name="password" type="password" placeholder="Mật khẩu">
+                    <button type="submit" class="btn btn-primary my-4">Đăng nhập</button>
+                </form>
+                <a href="#">Quên mật khẩu?</a><br>
+                <p>Chưa có tài khoản? <a href="/register">Đăng kí</a></p>
+            </div>
+        </div>
+    </div>
 </div>
