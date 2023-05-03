@@ -6,7 +6,10 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    //cart: {type: Object,required: true},
+    cart: {
+        type: Object,
+        required: true
+    },
     phoneNumber: {
         type: Number,
         required: true
