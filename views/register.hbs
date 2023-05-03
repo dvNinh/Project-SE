@@ -1,15 +1,52 @@
-<div class="login-box">
-    <h1>Đăng kí</h1>
-    {{#if message}}
-        <div class="message">{{message}}</div>
-    {{/if}}
-    <form method="post" action="/register">
-        <label for="username">Tên đăng nhập:</label><br>
-        <input id="username" name="username" type="text"><br>
-        <label for="password">Mật khẩu:</label><br>
-        <input id="password" name="password" type="text"><br>
-        <label for="retype">Nhập lại mật khẩu:</label><br>
-        <input id="retype" name="retype" type="text"><br>
-        <input type="submit" value="Đăng kí">
-    </form>
+<div class="register">
+    <div class="container-sm">
+        <div class="row py-5 px-3">
+            <div class="col-0 col-lg-1 col-xl-2"></div>
+            <div class="col-12 col-sm-12 col-lg-10 col-xl-8">
+                <h2 class="mt-4">Đăng kí tài khoản</h2>
+                <div class="message mt-3">
+                    {{#if message}}{{message}}{{/if}}
+                </div>
+                <form method="post" action="/register">
+                    <table class="table table-borderless align-middle">
+                        <tr>
+                            <th><label for="lastName">Họ:</label></th>
+                            <td><input type="text" class="form-control" id="lastName" name="lastName"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="firstName">Tên:</label></th>
+                            <td><input type="text" class="form-control" id="firstName" name="firstName"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="email">Email:</label></th>
+                            <td><input type="text" class="form-control" id="email" name="email"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="phoneNumber">Số điện thoại:</label></th>
+                            <td><input type="text" class="form-control" id="phoneNumber" name="phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="username">Tên đăng nhập:</label></th>
+                            <td><input type="text" class="form-control" id="username" name="username"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="password">Mật khẩu:</label></th>
+                            <td><input type="password" class="form-control" id="password" name="password"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="retype">Nhập lại mật khẩu:</label></th>
+                            <td><input type="password" class="form-control" id="retype" name="retype"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <button type="submit" class="btn btn-primary mt-3 me-3">Đăng kí</button>
+                                <a class="btn btn-secondary mt-3 ms-3" href="/login" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

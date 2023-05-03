@@ -36,17 +36,12 @@ class AuthController {
     }
 
     postRegister(req, res, next) {
-        if (!req.body.username)
-            return res.render('register', { message: 'Chưa nhập tên đăng nhập' });
-        if (!req.body.password)
-            return res.render('register', { message: 'Chưa nhập mật khẩu' });
+        for (var key in req.body)
+            if (!req.body[key]) return res.render('register', { message: 'Vui lòng nhập đầy đủ thông tin' });
         if (req.body.password !== req.body.retype)
             return res.render('register', { message: 'Mật khẩu nhập không khớp' });
 
-        const formData = {
-            username: req.body.username,
-            password: req.body.password
-        };
+        const { retype, ...formData } = req.body;
         User.findOne({ username: formData.username })
             .then(user => {
                 if (user) throw new Error('Tên đăng nhập đã tồn tại');
@@ -63,7 +58,7 @@ class AuthController {
             if (err) return next(err);
             req.session.regenerate(err => {
                 if (err) return next(err);
-                res.redirect('/');
+                res.redirect('back');
             });
         });
     }
@@ -74,7 +69,7 @@ class AuthController {
 
     postChangePass(req, res, next) {
         if (!req.body.username || !req.body.password || !req.body.newPassword || !req.body.retypeNewPassword)
-            return res.render('change-pass', { message: 'Chưa nhập đầy đủ thông tin' });
+            return res.render('change-pass', { message: 'Vui lòng nhập đầy đủ thông tin' });
         if (req.body.newPassword !== req.body.retypeNewPassword)
             return res.render('change-pass', { message: 'Mật khẩu nhập không khớp' });
 
