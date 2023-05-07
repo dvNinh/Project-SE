@@ -17,7 +17,7 @@
   		  	</div>
   		  	<div class="col-md-6 mb-3">
   		  	  	<label for="phoneNumber">Số điện thoại</label>
-  		  	  	<input class="form-control" type="tel" placeholder="0123-456-789" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}" required>
+  		  	  	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="" required>
   		  	  	<div class="invalid-feedback">
   		  	    	Please enter a valid phone number.
   		  	  	</div>
@@ -34,9 +34,18 @@
 
   		<div>Tổng số tiền cần thanh toán <b>{{totalPrice}} </b> VND</div>
   		<hr class="mb-4">
-
-		<a href="/" class="btn btn-primary btn-lg btn-block" title="Đặt hàng" type="submit" onclick="alert('Đặt hàng thành công')">Đặt hàng</a>
+		<button class="btn btn-lg btn-block" title="Đặt hàng" type="submit" onclick="afterOrder()">
+			Đặt hàng	
+		</button>
   	</form>
+	<script>
+		function afterOrder(){
+			alert('Đặt hàng thành công');
+			location.href = location.href;
+			//window.location.reload();
+			}
+		}
+	</script>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
