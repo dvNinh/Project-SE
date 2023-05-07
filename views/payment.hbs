@@ -6,8 +6,15 @@
   	<h1 class="mt-5">Thanh toán</h1>
   	<hr>
 
-  	<form method="post" action="/payment">
+  	<form method="post" action="/post_payment">
   		<div class="row">
+			{{!-- <div class="col-md-6 mb-2">
+  		  	  	<div class="form-control" for="username" id = "username" name = "username">Username: {{user.username}}</div>
+  		  	</div> --}}
+			<div class="">
+				<label for="username">Username:</label>
+  				<input type="text" class="form-control" id="username" name="username" value= {{user.username}} readonly><br><br>
+			</div>
   		  	<div class="col-md-6 mb-3">
   		  	  	<label for="fullName">Họ tên</label>
   		  	  	<input type="text" class="form-control" id="fullName" name="fullName" placeholder="" value="" required>
@@ -17,7 +24,7 @@
   		  	</div>
   		  	<div class="col-md-6 mb-3">
   		  	  	<label for="phoneNumber">Số điện thoại</label>
-  		  	  	<input class="form-control" type="tel" placeholder="0123-456-789" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}" required>
+  		  	  	<input class="form-control" type="tel" placeholder="0123456789" pattern="[0-9]{10}" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}" required>
   		  	  	<div class="invalid-feedback">
   		  	    	Please enter a valid phone number.
   		  	  	</div>
@@ -35,7 +42,9 @@
   		<div>Tổng số tiền cần thanh toán <b>{{totalPrice}} </b> VND</div>
   		<hr class="mb-4">
 
-		<a href="/" class="btn btn-primary btn-lg btn-block" title="Đặt hàng" type="submit" onclick="alert('Đặt hàng thành công')">Đặt hàng</a>
+		{{!-- <button type="submit" class="btn btn-primary"> Thêm </button> --}}
+		{{!-- <button class="btn btn-primary btn-lg btn-block" title="Đặt hàng" type="submit" onclick="alert('Đặt hàng thành công')">Đặt hàng </button> --}}
+		<button type="submit" class="btn btn-primary" >Đặt hàng </button>
   	</form>
 </div>
 

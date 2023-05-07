@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/AuthController');
 
+router.get('/payment', authController.getPayment);
+router.post('/post_payment', authController.exportOrder);
+
 router.get('/login', authController.getLogin);
 router.post('/login', authController.postLogin);
 
@@ -20,5 +23,4 @@ router.post('/profile/update/:id', authController.postUpdateProfile);
 router.get('/cart', authController.showCart);
 router.post('/cart/delete/:id', authController.deleteProductInCart);
 
-router.get('/payment', authController.getPayment);
 module.exports = router;
