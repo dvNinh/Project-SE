@@ -1,36 +1,77 @@
+<div class="header" style="height: 56px;">
+    {{> header}}
+</div>
+
 <div class="change-pass">
     <div class="container-sm">
         <div class="row py-5 px-3">
             <div class="col-0 col-md-1 col-xl-2"></div>
             <div class="col-12 col-md-10 col-xl-8">
-                <p class="h3 pb-3">Đặt lại mật khẩu</p>
-                <table class="table table-borderless align-middle">
-                    <form action="/change-pass" method="post">
+                <p class="h3 pb-3">Đổi mật khẩu</p>
+                <div class="message mt-3">
+                    {{#if message}}{{message}}{{/if}}
+                </div>
+                <table class="table table-borderless align-middle mt-3">
+                    <form id="change-pass-form" action="/change-pass" method="post">
                         <tr>
                             <th><label for="username">Tên đăng nhập:</label></th>
                             <td><input type="text" class="form-control" id="username" name="username"></td>
                         </tr>
                         <tr>
                             <th><label for="password">Mật khẩu:</label></th>
-                            <td><input type="text" class="form-control" id="password" name="password"></td>
+                            <td><input type="password" class="form-control" id="password" name="password"></td>
                         </tr>
                         <tr>
                             <th><label for="newPassword">Mật khẩu mới:</label></th>
-                            <td><input type="text" class="form-control" id="newPassword" name="newPassword"></td>
+                            <td><input type="password" class="form-control" id="newPassword" name="newPassword"></td>
                         </tr>
                         <tr>
                             <th><label for="retypeNewPassword">Nhập lại mật khẩu mới:</label></th>
-                            <td><input type="text" class="form-control" id="retypeNewPassword" name="retypeNewPassword"></td>
+                            <td><input type="password" class="form-control" id="retypeNewPassword" name="retypeNewPassword"></td>
                         </tr>
                         <tr>
                             <th></th>
                             <td>
                                 <button type="submit" class="btn btn-primary my-3 me-3">Xác nhận</button>
+                                <a class="btn btn-secondary ms-3" href="/profile/view" role="button">Hủy</a>
                             </td>
                         </tr>
                     </form>
                 </table>
             </div>
         </div>
+
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    $('#change-pass-form').on('submit', event => {
+        event.preventDefault();
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target))
+        })
+        .then(response => response.json())
+        .then(json => {
+            $('#modal').modal('toggle');
+            $('.modal-message').html(json.message);
+            if (json.changePassSuccess) $('.modal-button').html('<a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>');
+            else $('.modal-button').html('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>');
+        });
+    });
+</script>

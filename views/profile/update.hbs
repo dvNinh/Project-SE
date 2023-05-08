@@ -4,6 +4,7 @@
 
 <div class="profile">
     <div class="container-sm">
+        {{#if user}}
         <div class="row py-5 px-3">
             <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-8">
                 <p class="h3 pb-3">Cập nhật thông tin người dùng</p>
@@ -44,5 +45,31 @@
                 <img class="w-100" src="{{user.avatar}}" alt="{{user.username}} avatar">
             </div>
         </div>
+        {{else}}
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message">Bạn cần đăng nhập để thực hiện chức năng này</p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-button">
+                            <a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>
+                            <a type="button" class="btn btn-primary ms-3" href="/">Về trang chủ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(window).on('load', () => {
+                $('#modal').modal('toggle');
+            });
+        </script>
+        {{/if}}
     </div>
 </div>

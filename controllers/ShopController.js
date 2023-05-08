@@ -189,7 +189,7 @@ class ShopController {
             default:
                 res.json({ message: 'Tính năng chưa được mở khóa' });
         }
-    }
+    }   
 
     productRating(req, res, next) {
         const formData = {
@@ -203,6 +203,7 @@ class ShopController {
         comment.save();
         res.redirect('back');
     }
+
     exportOrder(req,res,next) {
         const data = {
             name: req.body.fullName,

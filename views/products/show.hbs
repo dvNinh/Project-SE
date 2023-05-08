@@ -14,9 +14,35 @@
                 <p class="card-text pt-1">{{product.description}}</p>
                 <p class="h5 card-title" style="color: red;">Giá: {{product.price}} VNĐ</p>
                 <p class="h6 card-title pt-1 pb-3">Còn lại: {{product.quantity}}</p>
-                <a class="btn btn-primary" id="cartButton" data-id="{{product.name}}" href="/product/add-to-cart/{{product._id}}">Thêm vào giỏ hàng</a>
+                <a class="btn btn-primary add-to-cart-btn" id="cartButton" data-id="{{product.name}}" href="/product/add-to-cart/{{product._id}}">Thêm vào giỏ hàng</a>
             </div>
         </div>
+        {{#if user}}
+        {{else}}
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message">Bạn cần đăng nhập để thực hiện chức năng này</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>
+                        <button type="button" class="btn btn-secondary ms-3" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $('.add-to-cart-btn').on('click', event => {
+                event.preventDefault();
+                $('#modal').modal('toggle');
+            });
+        </script>
+        {{/if}}
 
         <div>
             <h4 class="py-3">Chi tiết sản phẩm</h3>
@@ -42,6 +68,35 @@
                     <button class="btn btn-primary" type="submit">Gửi</button>
                 </div>    
             </form>
+
+            <script>
+                var starRate = 5;
+
+                const star_1 = document.querySelector('.star-1');
+                const star_2 = document.querySelector('.star-2');
+                const star_3 = document.querySelector('.star-3');
+                const star_4 = document.querySelector('.star-4');
+                const star_5 = document.querySelector('.star-5');
+
+                var starArr = [ star_1, star_2, star_3, star_4, star_5 ];
+                var starDescriptions = [ 'Tệ', 'Không tốt', 'Bình thường', 'Tốt', 'Tuyệt vời!' ];
+
+                function setStar() {
+                    for (var i = 0; i < starRate; i++) starArr[i].style.color = '#fbc634';
+                    for (var i = starRate; i < 5; i++) starArr[i].style.color = 'black';
+                    document.querySelector('.star-description').innerHTML = starDescriptions[starRate - 1];
+                    document.querySelector('input[name="star"]').value = starRate;
+                }
+
+                setStar();
+                
+                starArr.forEach((star, index) => {
+                    star.onclick = () => {
+                        starRate = index + 1;
+                        setStar();
+                    };
+                });
+            </script>
             {{else}}
             <p class="m-0 ms-3" style="display: inline;">Đăng nhập để đánh giá sản phẩm này:</p>
             <a href="/login">Đăng nhập</a>
@@ -59,48 +114,21 @@
                 </div>
                 {{/each}}
             </div>
+
+            <script>
+                function setStarInComment() {
+                    const commentRating = document.querySelectorAll('.comment-rating');
+                    commentRating.forEach(value => {
+                        var rating = parseInt(value.innerHTML);
+                        var html = '';
+                        for (var i = 0; i < rating; i++) html += '<span class="" style="color: #fbc634; -webkit-user-select: none; user-select: none;">&#9733;</span>';
+                        for (var i = rating; i < 5; i++) html += '<span class="" style="color: black; -webkit-user-select: none; user-select: none;">&#9733;</span>';
+                        value.innerHTML = html;
+                    });
+                }
+
+                setStarInComment();
+            </script>
         </div>
     </div>
 </div>
-
-<script>
-    var starRate = 5;
-
-    const star_1 = document.querySelector('.star-1');
-    const star_2 = document.querySelector('.star-2');
-    const star_3 = document.querySelector('.star-3');
-    const star_4 = document.querySelector('.star-4');
-    const star_5 = document.querySelector('.star-5');
-
-    var starArr = [ star_1, star_2, star_3, star_4, star_5 ];
-    var starDescriptions = [ 'Tệ', 'Không tốt', 'Bình thường', 'Tốt', 'Tuyệt vời!' ];
-
-    function setStar() {
-        for (var i = 0; i < starRate; i++) starArr[i].style.color = '#fbc634';
-        for (var i = starRate; i < 5; i++) starArr[i].style.color = 'black';
-        document.querySelector('.star-description').innerHTML = starDescriptions[starRate - 1];
-        document.querySelector('input[name="star"]').value = starRate;
-    }
-
-    setStar();
-
-    starArr.forEach((star, index) => {
-        star.onclick = () => {
-            starRate = index + 1;
-            setStar();
-        };
-    });
-
-    function setStarInComment() {
-        const commentRating = document.querySelectorAll('.comment-rating');
-        commentRating.forEach(value => {
-            var rating = parseInt(value.innerHTML);
-            var html = '';
-            for (var i = 0; i < rating; i++) html += '<span class="" style="color: #fbc634; -webkit-user-select: none; user-select: none;">&#9733;</span>';
-            for (var i = rating; i < 5; i++) html += '<span class="" style="color: black; -webkit-user-select: none; user-select: none;">&#9733;</span>';
-            value.innerHTML = html;
-        });
-    }
-
-    setStarInComment();
-</script>

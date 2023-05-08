@@ -16,12 +16,38 @@
                             <h6 class="card-title" style="color: black;height: 40px;overflow: hidden;">{{this.name}}</h6>
                         </a>
                         <h6 class="card-title" style="color: red;">Giá: {{this.price}} VNĐ</h6>
-                        <a class="btn btn-primary" href="/product/add-to-cart/{{this._id}}">Thêm vào giỏ hàng</a>
+                        <a class="btn btn-primary add-to-cart-btn" href="/product/add-to-cart/{{this._id}}">Thêm vào giỏ hàng</a>
                     </div>
                 </div>
             </div>
             {{/each}}
         </div>
+        {{#if user}}
+        {{else}}
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message">Bạn cần đăng nhập để thực hiện chức năng này</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>
+                        <button type="button" class="btn btn-secondary ms-3" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $('.add-to-cart-btn').on('click', event => {
+                event.preventDefault();
+                $('#modal').modal('toggle');
+            });
+        </script>
+        {{/if}}
     </div>
 </div>
 
