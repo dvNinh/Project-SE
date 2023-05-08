@@ -3,6 +3,7 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
+const order = require('../models/order');
 
 class AuthController {
     getLogin(req, res) {
@@ -221,6 +222,7 @@ class AuthController {
 
     getPayment(req, res, next) {
         const username = req.session.user.username;
+        //console.log(req.session)
         Cart.find({ username })
             .then(carts => {
                 //res.json(carts);
@@ -258,6 +260,8 @@ class AuthController {
 
                         }, 0);
 
+                        //console.log(req.session.user);
+
                         res.render('payment', {
                             user: req.session.user,
                             carts,
@@ -267,6 +271,99 @@ class AuthController {
             })
             .catch(next)
     }
+
+    exportOrder(req, res, next) {
+        const formData = req.body;
+        var username_ = formData.username;
+
+        //console.log(username_);
+        Cart.find({ username_ })
+            .then(carts => {
+                //res.json(carts);
+
+                const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
+                //res.json(promises);
+                Promise.all(promises)
+                    .then(products => {
+
+                        //res.json(products);
+
+                        products = multipleMongooseToObject(products);
+                        carts = carts.map((cart, index) => {
+                            const product = products[index];
+                            if (product) {
+                                return {
+                                    _id: cart._id,
+                                    product: products[index],
+                                    quantity: cart.quantity,
+                                    price: products[index].price * cart.quantity
+                                }
+                            }
+                        });
+                        var totalPrice = carts.reduce((accumulator, cart) => {
+                            /*
+                            try {
+                                return accumulator = accumulator + cart.price;
+                            } catch (e) {
+                                return accumulator;
+                            }*/
+                            if (cart && cart.price) {
+                                return accumulator = accumulator + cart.price;
+                            }
+                            return accumulator;
+
+                        }, 0);
+
+                        const data = {
+                            name: req.body.fullName,
+                            cart: carts,
+                            phoneNumber: req.body.phoneNumber,
+                            date: req.body.Date,
+                            address: req.body.address,
+                        }
+
+
+                        const userOrder = new order(data);
+                        try {
+                            userOrder.save();
+                            res.render('home', {
+                                user: req.session.user
+                            })
+                        } catch (e) {
+                            res.json('error')
+                        }
+
+                        // .then(() =>
+                        //     res.redirect('/home'))
+                        // .catch(error => {
+                        //     res.json('ERROR!')
+                        // });
+
+                        // res.render('payment', {
+                        //     user: req.session.user,
+                        //     carts,
+                        //     totalPrice,
+                        // });
+                    })
+            })
+            .catch(next)
+
+        // const data = {
+        //     name: req.body.fullName,
+        //     cart: req.session.user.cart,
+        //     phoneNumber: req.body.phoneNumber,
+        //     date: req.body.Date,
+        //     address: req.body.address,
+        // }
+        // const userOrder = new order(data);
+        // userOrder.save()
+        //     .then(() =>
+        //         res.redirect('/'))
+        //     .catch(error => {
+        //         res.json('ERROR!')
+        //     });
+    }
+
 }
 
 module.exports = new AuthController;

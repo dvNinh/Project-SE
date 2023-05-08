@@ -4,7 +4,7 @@ const Comment = require('../models/Comment');
 
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
-const order = require('../models/order');
+
 
 var searchText;
 
@@ -92,102 +92,152 @@ class ShopController {
     }
 
     warehouseProducts(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole == 'admin') {
-            Promise.all([Product.find({}), Product.countDocumentsDeleted()])
-                .then(
-                    ([products, deleteCount]) =>
-                    res.render('admin/warehouse', {
-                        deleteCount,
-                        products: multipleMongooseToObject(products)
-                    })
-                )
-                .catch(next)
-        } else {
-            res.json('Bạn không có quyền truy cập chức năng này')
+        try {
+            const userRole = req.session.user.role;
+            if (userRole == 'admin') {
+                Promise.all([Product.find({}), Product.countDocumentsDeleted()])
+                    .then(
+                        ([products, deleteCount]) =>
+                        res.render('admin/warehouse', {
+                            user: req.session.user,
+                            deleteCount,
+                            products: multipleMongooseToObject(products)
+                        })
+                    )
+                    .catch(next)
+            } else {
+                res.json('Bạn không có quyền truy cập chức năng này');
+            }
+        } catch (e) {
+            res.render('error');
         }
     }
 
     oldBinProducts(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole == 'admin') {
-            Product.findDeleted({})
-                .then((products) =>
-                    res.render('admin/oldBin', {
-                        products: multipleMongooseToObject(products),
-                    }),
-                )
-                .catch(next)
-        } else {
-            res.json('Bạn không có quyền truy cập chức năng này')
+        try {
+            const userRole = req.session.user.role;
+            if (userRole == 'admin') {
+                Product.findDeleted({})
+                    .then((products) =>
+                        res.render('admin/oldBin', {
+                            user: req.session.user,
+                            products: multipleMongooseToObject(products),
+                        }),
+                    )
+                    .catch(next)
+            } else {
+                res.json('Bạn không có quyền truy cập chức năng này')
+            }
+        } catch (e) {
+            res.render('error');
         }
     }
 
     edit(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole != 'admin') {
-            res.json('Bạn không có quyền truy cập chức năng này');
-            return;
-        }
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
 
-        Product.findById(req.params.id)
-            .then(product => res.render('products/edit', {
-                product: mongooseToObject(product)
-            }))
-            .catch(next);
+            Product.findById(req.params.id)
+                .then(product => res.render('products/edit', {
+                    product: mongooseToObject(product)
+                }))
+                .catch(next);
+        } catch (e) {
+            res.render('error')
+        }
     }
 
     update(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole != 'admin') {
-            res.json('Bạn không có quyền truy cập chức năng này');
-            return;
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
+
+            Product.updateOne({ _id: req.params.id }, req.body)
+                .then(() => res.redirect('admin/warehouse'))
+                .catch(next);
+        } catch (e) {
+            res.render('error')
         }
 
-        Product.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('admin/warehouse'))
-            .catch(next);
     }
 
     destroy(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole != 'admin') {
-            res.json('Bạn không có quyền truy cập chức năng này');
-            return;
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
+
+            /*sofe delete*/
+            Product.delete({ _id: req.params.id })
+                .then(() => res.redirect('back'))
+                .catch(next);
+        } catch (e) {
+            res.render('error');
         }
 
-        /*sofe delete*/
-        Product.delete({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
+    }
+
+    //DELETE /product/:id/force
+    forceDestroy(req, res, next) {
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
+
+            Product.deleteOne({ _id: req.params.id })
+                .then(() => res.redirect('back'))
+                .catch(next);
+        } catch (e) {
+            res.render('error')
+        }
     }
 
     restore(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole != 'admin') {
-            res.json('Bạn không có quyền truy cập chức năng này');
-            return;
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
+            Product.restore({ _id: req.params.id })
+                .then(() => res.redirect('back'))
+                .catch(next);
+        } catch (e) {
+            res.render('error')
         }
-        Product.restore({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
+
     }
 
     handleFormActions(req, res, next) {
-        const userRole = req.session.user.role;
-        if (userRole != 'admin') {
-            res.json('Bạn không có quyền truy cập chức năng này');
-            return;
-        }
+        try {
+            const userRole = req.session.user.role;
+            if (userRole != 'admin') {
+                res.json('Bạn không có quyền truy cập chức năng này');
+                return;
+            }
 
-        switch (req.body.action) {
-            case 'delete':
-                Product.delete({ _id: { $in: req.body.productIds } })
-                    .then(() => res.redirect('back'))
-                    .catch(next);
-                break;
-            default:
-                res.json({ message: 'Tính năng chưa được mở khóa' });
+            switch (req.body.action) {
+                case 'delete':
+                    Product.delete({ _id: { $in: req.body.productIds } })
+                        .then(() => res.redirect('back'))
+                        .catch(next);
+                    break;
+                default:
+                    res.json({ message: 'Tính năng chưa được mở khóa' });
+            }
+        } catch (e) {
+            res.render('error')
         }
     }   
 

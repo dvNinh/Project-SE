@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/AuthController');
 
+router.get('/payment', authController.getPayment);
+router.post('/post_payment', authController.exportOrder);
+
 router.get('/login', authController.getLogin);
 router.post('/login', authController.loginValidate, authController.postLogin);
 
