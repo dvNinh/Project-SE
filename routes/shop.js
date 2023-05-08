@@ -17,7 +17,7 @@ router.delete('/products/:id/force', shopController.forceDestroy);
 router.patch('/products/:id/restore', shopController.restore);
 router.put('/:id', shopController.update);
 
-router.get('/product/add-to-cart/:id', shopController.addProductToCart);
+router.post('/product/add-to-cart/:id', shopController.addProductToCart);
 router.get('/products/:slug', shopController.getProduct);
 router.post('/product/rating/:id', shopController.productRating);
 

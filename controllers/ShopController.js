@@ -74,11 +74,13 @@ class ShopController {
     }
 
     addProductToCart(req, res, next) {
-        if (!req.session.user) return res.redirect('/login');
+        if (!req.session.user) return res.json({
+            addSuccess: false,
+            message: 'Bạn cần đăng nhập để thực hiện chức năng này'
+        });
         const data = {
             username: req.session.user.username,
             productId: req.params.id,
-            role: req.params.role
         };
         Cart.findOne(data)
             .then(cart => {
@@ -87,7 +89,10 @@ class ShopController {
                     cart.save();
                 }
             })
-            .then(() => res.json({ success: true, message: 'Đã thêm vào giỏ hàng' }))
+            .then(() => res.json({
+                addSuccess: true,
+                message: 'Đã thêm vào giỏ hàng'
+            }))
             .catch(next);
     }
 

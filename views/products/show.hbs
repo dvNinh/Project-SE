@@ -14,11 +14,12 @@
                 <p class="card-text pt-1">{{product.description}}</p>
                 <p class="h5 card-title" style="color: red;">Giá: {{product.price}} VNĐ</p>
                 <p class="h6 card-title pt-1 pb-3">Còn lại: {{product.quantity}}</p>
-                <a class="btn btn-primary add-to-cart-btn" id="cartButton" data-id="{{product.name}}" href="/product/add-to-cart/{{product._id}}">Thêm vào giỏ hàng</a>
+                <form id="add-to-cart-form" action="/product/add-to-cart/{{product._id}}" method="post">
+                    <button type="submit" class="btn btn-primary add-to-cart-btn">Thêm vào giỏ hàng</button>
+                </form>
             </div>
         </div>
-        {{#if user}}
-        {{else}}
+
         <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -26,23 +27,31 @@
                         <h5 class="modal-title">Thông báo</h5>
                     </div>
                     <div class="modal-body">
-                        <p class="modal-message">Bạn cần đăng nhập để thực hiện chức năng này</p>
+                        <p class="modal-message"></p>
                     </div>
                     <div class="modal-footer">
-                        <a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>
-                        <button type="button" class="btn btn-secondary ms-3" data-bs-dismiss="modal">Đóng</button>
+                        <div class="modal-button"></div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <script>
-            $('.add-to-cart-btn').on('click', event => {
+            $('#add-to-cart-form').on('submit', event => {
                 event.preventDefault();
-                $('#modal').modal('toggle');
+                fetch(event.target.action, {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(event.target))
+                })
+                .then(response => response.json())
+                .then(json => {
+                    $('#modal').modal('toggle');
+                    $('.modal-message').html(json.message);
+                    if (json.addSuccess) $('.modal-button').html('<button type="button" class="close-btn btn btn-primary" data-bs-dismiss="modal">Xác nhận</button>');
+                    else $('.modal-button').html('<a type="button" class="btn btn-primary" href="/login">Đăng nhập</a><button type="button" class="close-btn btn btn-secondary ms-3" data-bs-dismiss="modal">Đóng</button>');
+                });
             });
         </script>
-        {{/if}}
 
         <div>
             <h4 class="py-3">Chi tiết sản phẩm</h3>
