@@ -10,22 +10,37 @@ class AuthController {
         res.render('login');
     }
 
-    postLogin(req, res, next) {
+    loginValidate(req, res, next) {
         if (!req.body.username)
-            return res.render('login', { message: 'Chưa nhập tên đăng nhập' });
+            return res.json({
+                loginSuccess: false,
+                message: 'Chưa nhập tên đăng nhập' 
+            });
         if (!req.body.password)
-            return res.render('login', { message: 'Chưa nhập mật khẩu' });
+            return res.json({
+                loginSuccess: false,
+                message: 'Chưa nhập mật khẩu'
+            });
+        next();
+    }
 
+    postLogin(req, res, next) {
         const formData = req.body;
         User.findOne(formData)
             .then(user => {
-                if (!user) throw new Error('Tên đăng nhập hoặc mật khẩu không đúng');
+                if (!user) return res.json({
+                    loginSuccess: false,
+                    message: 'Tên đăng nhập hoặc mật khẩu không đúng'
+                });
                 req.session.regenerate(err => {
-                    if (err) return next(err);
+                    if (err) return err;
                     req.session.user = mongooseToObject(user);
                     req.session.save(err => {
-                        if (err) return next(err);
-                        res.redirect('/');
+                        if (err) return err;
+                        res.json({
+                            loginSuccess: true,
+                            message: 'Đăng nhập thành công'
+                        });
                     });
                 });
             })
@@ -36,20 +51,35 @@ class AuthController {
         res.render('register');
     }
 
-    postRegister(req, res, next) {
+    registerValidate(req, res, next) {
         for (var key in req.body)
-            if (!req.body[key]) return res.render('register', { message: 'Vui lòng nhập đầy đủ thông tin' });
+            if (!req.body[key]) return res.json({
+                registerSuccess: false,
+                message: 'Vui lòng nhập đầy đủ thông tin' 
+            });
         if (req.body.password !== req.body.retype)
-            return res.render('register', { message: 'Mật khẩu nhập không khớp' });
+            return res.json({
+                registerSuccess: false,
+                message: 'Mật khẩu nhập không khớp' 
+            });
+        next();
+    }
 
+    postRegister(req, res, next) {
         const { retype, ...formData } = req.body;
         User.findOne({ username: formData.username })
             .then(user => {
-                if (user) throw new Error('Tên đăng nhập đã tồn tại');
+                if (user) return res.json({
+                    registerSuccess: false,
+                    message: 'Tên đăng nhập đã tồn tại'
+                });
                 const userCreate = new User(formData);
                 userCreate.save();
+                res.json({
+                    registerSuccess: true,
+                    message: 'Đăng kí tài khoản thành công'
+                });
             })
-            .then(() => res.redirect('/login'))
             .catch(next);
     }
 
@@ -64,28 +94,49 @@ class AuthController {
         });
     }
 
-    getChangePass(req, res, next) {
-        res.render('changePass');
+    getChangePass(req, res) {
+        res.render('changePass', {
+            user: req.session.user
+        });
+    }
+
+    changePassValidate(req, res, next) {
+        if (!req.body.username || !req.body.password || !req.body.newPassword || !req.body.retypeNewPassword)
+            return res.json({
+                changePassSuccess: false,
+                message: 'Vui lòng nhập đầy đủ thông tin'
+            });
+        if (req.body.newPassword !== req.body.retypeNewPassword)
+            return res.json({
+                changePassSuccess: false,
+                message: 'Mật khẩu nhập không khớp'
+            });
+        next();
     }
 
     postChangePass(req, res, next) {
-        if (!req.body.username || !req.body.password || !req.body.newPassword || !req.body.retypeNewPassword)
-            return res.render('change-pass', { message: 'Vui lòng nhập đầy đủ thông tin' });
-        if (req.body.newPassword !== req.body.retypeNewPassword)
-            return res.render('change-pass', { message: 'Mật khẩu nhập không khớp' });
-
-        User.findOneAndUpdate({ username: req.body.username, password: req.body.password }, { password: req.body.newPassword })
-            .then(() => res.redirect('/login'))
+        User.findOne({ username: req.body.username, password: req.body.password })
+            .then(user => {
+                if (!user) return res.json({
+                    changePassSuccess: false,
+                    message: 'Tên đăng nhập hoặc mật khẩu không đúng'
+                });
+                User.findOneAndUpdate({ username: req.body.username, password: req.body.password }, { password: req.body.newPassword })
+                    .then(() => res.json({
+                        changePassSuccess: true,
+                        message: 'Đổi mật khẩu thành công'
+                    }));
+            })
             .catch(next);
     }
 
-    getProfile(req, res, next) {
+    getProfile(req, res) {
         res.render('profile/view', {
             user: req.session.user
         });
     }
 
-    getUpdateProfile(req, res, next) {
+    getUpdateProfile(req, res) {
         res.render('profile/update', {
             user: req.session.user
         });
@@ -108,18 +159,13 @@ class AuthController {
     }
 
     showCart(req, res, next) {
+        if (!req.session.user) return res.render('cart/view', { user: undefined });
         const username = req.session.user.username;
         Cart.find({ username })
             .then(carts => {
-                //res.json(carts);
-
                 const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
-                //res.json(promises);
                 Promise.all(promises)
                     .then(products => {
-
-                        //res.json(products);
-
                         products = multipleMongooseToObject(products);
                         carts = carts.map((cart, index) => {
                             const product = products[index];
@@ -132,47 +178,44 @@ class AuthController {
                                 }
                             }
                         });
-                        var totalPrice = carts.reduce((accumulator, cart) => {
-                            /*
-                            try {
-                                return accumulator = accumulator + cart.price;
-                            } catch (e) {
-                                return accumulator;
-                            }*/
-                            if (cart && cart.price) {
-                                return accumulator = accumulator + cart.price;
-                            }
-                            return accumulator;
-
-                        }, 0);
-
-                        var totalQuantity = carts.reduce((sum = 0, cart) => {
-                            /*
-                            try {
-                                return accumulator = accumulator + cart.price;
-                            } catch (e) {
-                                return accumulator;
-                            }*/
-                            if (cart && cart.quantity) {
-                                return sum = sum + cart.quantity;
-                            }
-                            return sum;
-
-                        }, 0);
-
-                        res.render('cart', {
+                        req.session.carts = carts;
+                        req.session.save();
+                        res.render('cart/view', {
                             user: req.session.user,
-                            carts,
-                            totalPrice,
-                            totalQuantity
+                            carts: req.session.carts,
                         });
                     })
             })
-            .catch(next)
+            .catch(next);
+    }
+
+    getUpdateCart(req, res) {
+        res.render('cart/update', {
+            user: req.session.user,
+            carts: req.session.carts,
+        });
+    }
+
+    postUpdateCart(req, res, next) {
+        if (!req.session.user) return res.render('cart/update', { user: undefined });
+        var promises = [];
+        for (var id in req.body) {
+            req.session.carts.find(item => item._id === id).quantity = req.body[id];
+            promises.push(Cart.updateOne({ _id: id }, { quantity: req.body[id] }));
+        }
+        Promise.all(promises)
+            .then(() => res.redirect('/cart/view'))
+            .catch(next);
     }
 
     deleteProductInCart(req, res, next) {
         Cart.deleteOne({ _id: req.params.id })
+            .then(() => {
+                var carts = req.session.carts;
+                carts = carts.filter(item => item._id !== req.params.id);
+                req.session.carts = carts;
+                req.session.save();
+            })
             .then(() => res.redirect('back'))
             .catch(next);
     }

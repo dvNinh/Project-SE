@@ -239,7 +239,7 @@ class ShopController {
         } catch (e) {
             res.render('error')
         }
-    }
+    }   
 
     productRating(req, res, next) {
         const formData = {
@@ -252,6 +252,17 @@ class ShopController {
         const comment = new Comment(formData);
         comment.save();
         res.redirect('back');
+    }
+
+    exportOrder(req,res,next) {
+        const data = {
+            name: req.body.fullName,
+            phoneNumber: req.body.phoneNumber,
+            date: req.body.Date,
+            address: req.body.address
+        }
+        const userOrder = new order(data);
+        userOrder.save();
     }
 }
 module.exports = new ShopController;

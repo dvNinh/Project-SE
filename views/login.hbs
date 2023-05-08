@@ -7,7 +7,7 @@
                 <div class="message mt-3">
                     {{#if message}}{{message}}{{/if}}
                 </div>
-                <form method="post" action="/login">
+                <form id="login-form" method="post" action="/login">
                     <input class="form-control mt-3" id="username" name="username" type="text" placeholder="Tên đăng nhập">
                     <input class="form-control mt-3" id="password" name="password" type="password" placeholder="Mật khẩu">
                     <button type="submit" class="btn btn-primary my-4">Đăng nhập</button>
@@ -16,5 +16,38 @@
                 <p>Chưa có tài khoản? <a href="/register">Đăng kí</a></p>
             </div>
         </div>
+
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    $('#login-form').on('submit', event => {
+        event.preventDefault();
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target))
+        })
+        .then(response => response.json())
+        .then(json => {
+            $('#modal').modal('toggle');
+            $('.modal-message').html(json.message);
+            if (json.loginSuccess) $('.modal-button').html('<a type="button" class="btn btn-primary" href="/">Về trang chủ</a>');
+            else $('.modal-button').html('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>');
+        });
+    });
+</script>

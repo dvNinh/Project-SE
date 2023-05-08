@@ -34,6 +34,7 @@ const shopRouter = require('./routes/shop');
 const authRouter = require('./routes/auth');
 app.use(shopRouter);
 app.use(authRouter);
+app.use('*', (req, res) => res.render('notFound'));
 
 const db = require('./config/db');
 db.connect();

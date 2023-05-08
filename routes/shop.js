@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const shopController = require('../controllers/ShopController');
-const ShopController = require('../controllers/ShopController');
 
 router.get('/home', shopController.getHome);
 
@@ -16,7 +15,7 @@ router.delete('/products/:id/delete', shopController.destroy);
 router.delete('/products/:id/force', shopController.forceDestroy);
 
 router.patch('/products/:id/restore', shopController.restore);
-router.put('/:id', ShopController.update);
+router.put('/:id', shopController.update);
 
 router.get('/product/add-to-cart/:id', shopController.addProductToCart);
 router.get('/products/:slug', shopController.getProduct);
