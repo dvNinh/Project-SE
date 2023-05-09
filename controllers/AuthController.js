@@ -217,7 +217,7 @@ class AuthController {
 
                         }, 0);
 
-                        //console.log(req.session.user);
+                        //console.log(carts);
 
                         res.render('payment', {
                             user: req.session.user,
@@ -234,16 +234,16 @@ class AuthController {
         var username_ = formData.username;
 
         //console.log(username_);
-        Cart.find({ username_ })
+        Cart.find({ username: username_ })
             .then(carts => {
                 //res.json(carts);
 
                 const promises = carts.map(cart => Product.findOne({ _id: cart.productId }));
-                //res.json(promises);
+                // console.log(promises);
                 Promise.all(promises)
                     .then(products => {
 
-                        //res.json(products);
+                        //console.log(products);
 
                         products = multipleMongooseToObject(products);
                         carts = carts.map((cart, index) => {
@@ -257,6 +257,9 @@ class AuthController {
                                 }
                             }
                         });
+
+                        //console.log(carts);
+
                         var totalPrice = carts.reduce((accumulator, cart) => {
                             /*
                             try {
@@ -270,10 +273,12 @@ class AuthController {
                             return accumulator;
 
                         }, 0);
+                        //console.log(typeof(carts));
 
+                        //const carts_ = multipleMongooseToObject(carts);
                         const data = {
                             name: req.body.fullName,
-                            cart: carts,
+                            cart: products,
                             phoneNumber: req.body.phoneNumber,
                             date: req.body.Date,
                             address: req.body.address,
@@ -281,26 +286,24 @@ class AuthController {
 
 
                         const userOrder = new order(data);
+                        //console.log('userOrder.cart');
+                        //console.log(userOrder.cart);
+                        // console.log('product');
+                        // console.log(products);
+
                         try {
-                            userOrder.save();
-                            res.render('home', {
-                                user: req.session.user
-                            })
+                            userOrder.save()
+                                .then(() =>
+                                    res.redirect('/')
+                                )
+                                .catch(error => {
+                                    res.json('ERROR!')
+                                })
                         } catch (e) {
                             res.json('error')
                         }
 
-                        // .then(() =>
-                        //     res.redirect('/home'))
-                        // .catch(error => {
-                        //     res.json('ERROR!')
-                        // });
 
-                        // res.render('payment', {
-                        //     user: req.session.user,
-                        //     carts,
-                        //     totalPrice,
-                        // });
                     })
             })
             .catch(next)
