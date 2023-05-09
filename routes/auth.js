@@ -26,5 +26,5 @@ router.post('/cart/update', authController.postUpdateCart);
 router.post('/cart/delete/:id', authController.deleteProductInCart);
 
 router.get('/payment', authController.getPayment);
-
+router.get('/bills', authController.getBills)
 module.exports = router;

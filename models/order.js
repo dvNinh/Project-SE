@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Product = require('./Product');
 const Order = new Schema({
+    username: { type: String },
     name: {
         type: String,
         required: true
     },
     cart: {
-        type: [Product.schema],
+        type: [Object],
         required: true
     },
     phoneNumber: {

@@ -14,7 +14,7 @@ class AuthController {
         if (!req.body.username)
             return res.json({
                 loginSuccess: false,
-                message: 'Chưa nhập tên đăng nhập' 
+                message: 'Chưa nhập tên đăng nhập'
             });
         if (!req.body.password)
             return res.json({
@@ -55,12 +55,12 @@ class AuthController {
         for (var key in req.body)
             if (!req.body[key]) return res.json({
                 registerSuccess: false,
-                message: 'Vui lòng nhập đầy đủ thông tin' 
+                message: 'Vui lòng nhập đầy đủ thông tin'
             });
         if (req.body.password !== req.body.retype)
             return res.json({
                 registerSuccess: false,
-                message: 'Mật khẩu nhập không khớp' 
+                message: 'Mật khẩu nhập không khớp'
             });
         next();
     }
@@ -289,9 +289,12 @@ class AuthController {
                         //console.log(products);
 
                         products = multipleMongooseToObject(products);
+                        //carts_ = multipleMongooseToObject(carts);
+                        let cartsId = [];
                         carts = carts.map((cart, index) => {
                             const product = products[index];
                             if (product) {
+                                cartsId[cartsId.length] = cart._id;
                                 return {
                                     _id: cart._id,
                                     product: products[index],
@@ -301,46 +304,74 @@ class AuthController {
                             }
                         });
 
-                        //console.log(carts);
+                        // console.log(cartsId);
 
-                        var totalPrice = carts.reduce((accumulator, cart) => {
-                            /*
-                            try {
-                                return accumulator = accumulator + cart.price;
-                            } catch (e) {
-                                return accumulator;
-                            }*/
-                            if (cart && cart.price) {
-                                return accumulator = accumulator + cart.price;
-                            }
-                            return accumulator;
 
-                        }, 0);
+                        // var totalPrice = carts.reduce((accumulator, cart) => {
+                        //     /*
+                        //     try {
+                        //         return accumulator = accumulator + cart.price;
+                        //     } catch (e) {
+                        //         return accumulator;
+                        //     }*/
+                        //     if (cart && cart.price) {
+                        //         return accumulator = accumulator + cart.price;
+                        //     }
+                        //     return accumulator;
+
+                        // }, 0);
                         //console.log(typeof(carts));
 
-                        //const carts_ = multipleMongooseToObject(carts);
+                        // const cartsCopy = [...cartsOriginal]; // Tạo bản sao của mảng carts
+                        //console.log(cartsCopy);
+                        // const formattedCarts = cartsCopy.map((formattedCarts, index) => {
+                        //     const product = products[index];
+                        //     if (product) {
+                        //         return {
+                        //             _id: formattedCarts._id,
+                        //             product: products[index],
+                        //             quantity: formattedCarts.quantity,
+                        //             price: products[index].price * formattedCarts.quantity
+                        //         }
+                        //     }
+                        // });
                         const data = {
-                            name: req.body.fullName,
-                            cart: products,
-                            phoneNumber: req.body.phoneNumber,
-                            date: req.body.Date,
-                            address: req.body.address,
-                        }
+                                username: username_,
+                                name: req.body.fullName,
+                                phoneNumber: req.body.phoneNumber,
+                                date: req.body.Date,
+                                address: req.body.address,
+                            }
+                            // const data = {
+                            //     username: username_,
+                            //     name: req.body.fullName,
+                            //     cart: carts_,
+                            //     phoneNumber: req.body.phoneNumber,
+                            //     date: req.body.Date,
+                            //     address: req.body.address,
+                            // }
 
-
+                        //console.log(data.cart);
                         const userOrder = new order(data);
-                        //console.log('userOrder.cart');
+                        // console.log(typeof(carts));
+                        userOrder.cart = carts;
+                        //console.log('userOrder.cart:');
                         //console.log(userOrder.cart);
                         // console.log('product');
                         // console.log(products);
-
+                        console.log(username_);
                         try {
                             userOrder.save()
-                                .then(() =>
-                                    res.redirect('/')
-                                )
+                                .then(() => {
+                                    Cart.deleteMany({ username: username_ })
+                                        .then(() => res.redirect('/'))
+                                        .catch(e => {
+                                            res.json('error')
+                                        })
+
+                                })
                                 .catch(error => {
-                                    res.json('ERROR!')
+                                    res.json('error')
                                 })
                         } catch (e) {
                             res.json('error')
@@ -350,21 +381,16 @@ class AuthController {
                     })
             })
             .catch(next)
+    }
 
-        // const data = {
-        //     name: req.body.fullName,
-        //     cart: req.session.user.cart,
-        //     phoneNumber: req.body.phoneNumber,
-        //     date: req.body.Date,
-        //     address: req.body.address,
-        // }
-        // const userOrder = new order(data);
-        // userOrder.save()
-        //     .then(() =>
-        //         res.redirect('/'))
-        //     .catch(error => {
-        //         res.json('ERROR!')
-        //     });
+    getBills(req, res, next) {
+        const username = req.session.user.username;
+        //console.log(req.session)
+        order.find({ username: username })
+            .then(orders => {
+                orders = multipleMongooseToObject(orders);
+                res.render('bills', { orders: orders })
+            })
     }
 
 }

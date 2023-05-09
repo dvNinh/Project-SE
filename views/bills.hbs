@@ -1,0 +1,23 @@
+{{!-- <div class="header" style="height: 56px;">
+    {{> header}}
+</div> --}}
+
+<body>
+  <h1>Orders</h1>
+  {{#each orders}}
+    <div>
+      <p>Username: {{this.username}}</p>
+      <p>Name: {{this.name}}</p>
+      <p>Phone number: {{this.phoneNumber}}</p>
+      <p>Address: {{this.address}}</p>
+      <p>Date: {{this.date}}</p>
+      <h2>Cart:</h2>
+      {{#each this.cart}}
+        <div>
+          <p>Product name: {{this._id.name}}</p>
+          <p>Quantity: {{this.quantity}}</p>
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+</body>
