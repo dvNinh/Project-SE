@@ -7,7 +7,7 @@
                 <div class="message mt-3">
                     {{#if message}}{{message}}{{/if}}
                 </div>
-                <form method="post" action="/register">
+                <form id="register-form" method="post" action="/register">
                     <table class="table table-borderless align-middle">
                         <tr>
                             <th><label for="lastName">Họ:</label></th>
@@ -48,5 +48,38 @@
                 </form>
             </div>
         </div>
+
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    $('#register-form').on('submit', event => {
+        event.preventDefault();
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target))
+        })
+        .then(response => response.json())
+        .then(json => {
+            $('#modal').modal('toggle');
+            $('.modal-message').html(json.message);
+            if (json.registerSuccess) $('.modal-button').html('<a type="button" class="btn btn-primary" href="/login">Đăng nhập</a>');
+            else $('.modal-button').html('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>');
+        });
+    });
+</script>

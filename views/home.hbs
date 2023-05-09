@@ -16,12 +16,49 @@
                             <h6 class="card-title" style="color: black;height: 40px;overflow: hidden;">{{this.name}}</h6>
                         </a>
                         <h6 class="card-title" style="color: red;">Giá: {{this.price}} VNĐ</h6>
-                        <a class="btn btn-primary" href="/product/add-to-cart/{{this._id}}">Thêm vào giỏ hàng</a>
+                        <form class="add-to-cart-form" action="/product/add-to-cart/{{this._id}}" method="post">
+                            <button type="submit" class="btn btn-primary add-to-cart-btn">Thêm vào giỏ hàng</button>
+                        </form>
                     </div>
                 </div>
             </div>
             {{/each}}
         </div>
+
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            Array.from(document.querySelectorAll('.add-to-cart-form')).forEach(form => {
+                form.addEventListener('submit', event => {
+                    event.preventDefault();
+                    fetch(event.target.action, {
+                        method: 'POST',
+                        body: new URLSearchParams(new FormData(event.target))
+                    })
+                    .then(response => response.json())
+                    .then(json => {
+                        $('#modal').modal('toggle');
+                        $('.modal-message').html(json.message);
+                        if (json.addSuccess) $('.modal-button').html('<button type="button" class="close-btn btn btn-primary" data-bs-dismiss="modal">Xác nhận</button>');
+                        else $('.modal-button').html('<a type="button" class="btn btn-primary" href="/login">Đăng nhập</a><button type="button" class="close-btn btn btn-secondary ms-3" data-bs-dismiss="modal">Đóng</button>');
+                    });
+                });
+            });
+        </script>
     </div>
 </div>
 

@@ -74,11 +74,13 @@ class ShopController {
     }
 
     addProductToCart(req, res, next) {
-        if (!req.session.user) return res.redirect('/login');
+        if (!req.session.user) return res.json({
+            addSuccess: false,
+            message: 'Bạn cần đăng nhập để thực hiện chức năng này'
+        });
         const data = {
             username: req.session.user.username,
             productId: req.params.id,
-            role: req.params.role
         };
         Cart.findOne(data)
             .then(cart => {
@@ -87,7 +89,10 @@ class ShopController {
                     cart.save();
                 }
             })
-            .then(() => res.json({ success: true, message: 'Đã thêm vào giỏ hàng' }))
+            .then(() => res.json({
+                addSuccess: true,
+                message: 'Đã thêm vào giỏ hàng'
+            }))
             .catch(next);
     }
 
@@ -239,7 +244,7 @@ class ShopController {
         } catch (e) {
             res.render('error')
         }
-    }
+    }   
 
     productRating(req, res, next) {
         const formData = {
@@ -252,6 +257,17 @@ class ShopController {
         const comment = new Comment(formData);
         comment.save();
         res.redirect('back');
+    }
+
+    exportOrder(req,res,next) {
+        const data = {
+            name: req.body.fullName,
+            phoneNumber: req.body.phoneNumber,
+            date: req.body.Date,
+            address: req.body.address
+        }
+        const userOrder = new order(data);
+        userOrder.save();
     }
 }
 module.exports = new ShopController;
