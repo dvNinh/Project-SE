@@ -389,7 +389,10 @@ class AuthController {
         order.find({ username: username })
             .then(orders => {
                 orders = multipleMongooseToObject(orders);
-                res.render('bills', { orders: orders })
+                res.render('bills', {
+                    user: req.session.user,
+                    orders: orders
+                })
             })
     }
 

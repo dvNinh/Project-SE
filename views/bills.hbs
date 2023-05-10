@@ -1,23 +1,79 @@
-{{!-- <div class="header" style="height: 56px;">
-    {{> header}}
-</div> --}}
+<div class="header" style="height: 56px;">
+  {{> header02}}
+</div>
+
+<div class="container-sm">
+  <h1>Orders</h1>
+  <div class="row pt-5">
+    <table class="table table-striped table-hover table-bordered align-middle">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Sản phẩm</th>
+          <th scope="col">Đơn giá</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+        <div>
+          <h2>Cart:</h2>
+          <div class = "row">
+          <p class="col-md-6 mb-3">Name: {{this.name}}</p>
+          <p class="col-md-6 mb-3">Phone number: {{this.phoneNumber}}</p>
+          </div>
+          <div class = "row">
+          <p class="col-md-6 mb-3">Address: {{this.address}}</p>
+          <p class="col-md-6 mb-3">Date: {{this.date}}</p>
+          </div>
+          {{#each this.cart}}
+          {{#if this.product}}
+          <tr>
+            <td><a href="/products/{{this.product.slug}}" style="text-decoration: none; color: black">
+                <div class="row">
+                  <div class="col-2 col-md-1">
+                    <img src="{{this.product.image}}" class="rounded-start w-100" alt="{{this.product.name}}">
+                  </div>
+                  <div class="col-10 col-md-11">
+                    <div class="card-body">
+                      <h5 class="card-title">{{this.product.name}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </a></td>
+            <td class="text-end">{{this.product.price}}</td>
+            <td class="text-center quantity">{{this.quantity}}</td>
+            <td class="text-end price" style="color: red;"><b>{{this.price}}</b></td>
+          </tr>
+          {{/if}}
+          {{/each}}
+        </div>
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+{{!--
 
 <body>
   <h1>Orders</h1>
   {{#each orders}}
+  <div>
+    <p>Username: {{this.username}}</p>
+    <p>Name: {{this.name}}</p>
+    <p>Phone number: {{this.phoneNumber}}</p>
+    <p>Address: {{this.address}}</p>
+    <p>Date: {{this.date}}</p>
+    <h2>Cart:</h2>
+    {{#each this.cart}}
     <div>
-      <p>Username: {{this.username}}</p>
-      <p>Name: {{this.name}}</p>
-      <p>Phone number: {{this.phoneNumber}}</p>
-      <p>Address: {{this.address}}</p>
-      <p>Date: {{this.date}}</p>
-      <h2>Cart:</h2>
-      {{#each this.cart}}
-        <div>
-          <p>Product name: {{this._id.name}}</p>
-          <p>Quantity: {{this.quantity}}</p>
-        </div>
-      {{/each}}
+      <p>Product name: {{this.product.name}}</p>
+      <p>Quantity: {{this.quantity}}</p>
     </div>
+    {{/each}}
+  </div>
   {{/each}}
-</body>
+</body> --}}
