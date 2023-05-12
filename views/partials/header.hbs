@@ -14,26 +14,9 @@
 				<li class = "nav-item">
 					<a href="/home" class="list-group-item nav-link active" aria-current="page"><i class="fa fa-home fa-fw-3x"  style="color: beige"></i> Home</a>
 				</li>
-				
-
-				{{!-- <li class="nav-item">
-					<i class="fa fa-home" aria-hidden="false" style="color:beige"></i>
-					<a class="nav-link active" aria-current="page" href="/">Home</a>							
-				</li> --}}
-
-				{{!-- <li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Dropdown
-					</a>
-					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
-				</li> --}}
 			</ul>
 
+			{{#if search}}
 			<form class="d-flex" action="/search" name="q" method="get">
 				<input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="searchText">
 				<button class="btn btn-success me-5" type="submit">
@@ -42,6 +25,7 @@
 					</svg>
 				</button>
 			</form>
+			{{/if}}
 		</div>
 
 		{{#if user.username}}
@@ -54,19 +38,19 @@
 					<li><a class="dropdown-item h6" href="/profile/view">
 						<div class="d-flex align-items-center">
 							<img src={{user.avatar}} class="rounded-circle" width="30" height="30" loading="lazy"/>
-							<div class="mx-2">{{user.username}}</div>
+							<div class="mx-2">{{user.firstName}} {{user.lastName}}</div>
 						</div>
 					</a></li>
 					<li><hr class="dropdown-divider"></li>
 					<li><a class="dropdown-item" href="/profile/update/{{user.id}}"> <i class="fa fa-cog"></i> Cài đặt</a></li>
 					<li><a class="dropdown-item" href="/cart/view"> <i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-					<li><a class="dropdown-item" href="/logout"> <i class="fa fa-sign-out"></i> Đăng xuất</a></li>
 					<li><a class="dropdown-item" href="/bills"> <i class="fa fa-files-o"></i> Các đơn hàng đã mua</a></li>
 					{{#if (myEqual user.role 'admin')}}
 						<li><a class="dropdown-item" href="/admin/warehouse"> <i class="fa fa-database"></i> Các sản phẩm đang bán</a></li>
 						<li><a class="dropdown-item" href="/oldBin"> <i class="fa fa-database"></i>  Các sản phẩm đã ngừng bán</a></li>
 						<li><a class="dropdown-item" href="/shop/create"> <i class="fa fa-plus-circle"></i>  Tạo sản phẩm mới</a></li>
 					{{/if}}
+					<li><a class="dropdown-item" href="/logout"> <i class="fa fa-sign-out"></i> Đăng xuất</a></li>
 				</ul>
 			</div>
 		</div>

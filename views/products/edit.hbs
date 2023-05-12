@@ -1,30 +1,31 @@
-<div class="mt-4 ml-4 mr-4" style = "margin: 2.0rem">
-    <h3> Chỉnh sửa sản phẩm </h3>
+<div class="container-sm">
+    <div class="mt-4 ml-4 mr-4" style = "margin: 2.0rem">
+        <h3> Chỉnh sửa sản phẩm </h3>
 
-    <form class = "mt-4 ml-4 mr-4" method="post" action = "/{{product._id}}?_method=PUT">
-         <div class="form-group">
-            <label for="name"> Name </label>
-            <input type="text" class="form-control" value = "{{product.name}}" id="description" name = "name">  
-        </div>
+        <form class = "mt-4 ml-4 mr-4" method="post" action = "/{{product._id}}?_method=PUT">
+            <div class="form-group">
+                <label for="name"> Name </label>
+                <input type="text" class="form-control" value = "{{product.name}}" id="description" name = "name">  
+            </div>
 
-        <div class="form-group ml-4 mr-4">
-            <label for="description"> Mô tả </label>
-            <textarea type="text" class="form-control" id="description" name = "description"> {{product.description}} </textarea>
-        
-        </div>
+            <div class="form-group ml-4 mr-4">
+                <label for="description"> Mô tả </label>
+                <textarea type="text" class="form-control" id="description" name = "description"> {{product.description}} </textarea>
+            
+            </div>
 
-        <div class="form-group ml-4 mr-4">
-            <label for="price"> Price </label>
-            <input type="number" class="form-control" value = "{{product.price}}"id="price" name = "price">  
-        </div>
+            <div class="form-group ml-4 mr-4">
+                <label for="price"> Price </label>
+                <input type="number" class="form-control" value = "{{product.price}}"id="price" name = "price">  
+            </div>
 
-         <div class="form-group ml-4 mr-4">
-            <label for="quantity"> Quantity </label>
-            <input type="number" class="form-control" value = "{{product.quantity}}"id="quantity" name = "quantity">  
-        </div>
+            <div class="form-group ml-4 mr-4">
+                <label for="quantity"> Quantity </label>
+                <input type="number" class="form-control" value = "{{product.quantity}}"id="quantity" name = "quantity">  
+            </div>
 
 
-        <button type="submit" class="btn btn-primary"> Cập nhật </button>
-    </form>
-
+            <button type="submit" class="btn btn-primary"> Cập nhật </button>
+        </form>
+    </div>
 </div>

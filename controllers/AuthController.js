@@ -1,9 +1,10 @@
 const User = require('../models/User');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
+const Order = require('../models/Order');
+
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
-const order = require('../models/order');
 
 class AuthController {
     getLogin(req, res) {
@@ -85,6 +86,7 @@ class AuthController {
 
     logout(req, res, next) {
         req.session.user = null;
+        req.session.carts = null;
         req.session.save(err => {
             if (err) return next(err);
             req.session.regenerate(err => {
@@ -200,7 +202,7 @@ class AuthController {
         if (!req.session.user) return res.render('cart/update', { user: undefined });
         var promises = [];
         for (var id in req.body) {
-            req.session.carts.find(item => item._id === id).quantity = req.body[id];
+            req.session.carts.find(item => item ? item._id === id : false).quantity = req.body[id];
             promises.push(Cart.updateOne({ _id: id }, { quantity: req.body[id] }));
         }
         Promise.all(promises)
@@ -352,7 +354,7 @@ class AuthController {
                             // }
 
                         //console.log(data.cart);
-                        const userOrder = new order(data);
+                        const userOrder = new Order(data);
                         // console.log(typeof(carts));
                         userOrder.cart = carts;
                         //console.log('userOrder.cart:');
@@ -386,7 +388,7 @@ class AuthController {
     getBills(req, res, next) {
         const username = req.session.user.username;
         //console.log(req.session)
-        order.find({ username: username })
+        Order.find({ username: username })
             .then(orders => {
                 orders = multipleMongooseToObject(orders);
                 res.render('bills', {

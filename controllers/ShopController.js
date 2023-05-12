@@ -5,7 +5,6 @@ const Comment = require('../models/Comment');
 const { multipleMongooseToObject } = require('../util/mongoose');
 const { mongooseToObject } = require('../util/mongoose');
 
-
 var searchText;
 
 class ShopController {
@@ -14,7 +13,8 @@ class ShopController {
             .then(products => {
                 res.render('home', {
                     user: req.session.user,
-                    products: multipleMongooseToObject(products)
+                    products: multipleMongooseToObject(products),
+                    search: true
                 });
             })
             .catch(next);
@@ -26,7 +26,7 @@ class ShopController {
             res.json('Bạn không có quyền truy cập chức năng này');
             return;
         }
-        res.render('products/create');
+        res.render('products/create', { user: req.session.user });
     }
 
     store(req, res, next) {
@@ -46,14 +46,17 @@ class ShopController {
     getProduct(req, res, next) {
         Product.findOne({ slug: req.params.slug })
             .then(product => {
-                Comment.find({ productId: product._id })
-                    .then(comments => {
-                        res.render('products/show', {
-                            user: req.session.user,
-                            product: mongooseToObject(product),
-                            comments: multipleMongooseToObject(comments)
+                if (!product) res.json({ status: false, message: 'Không tìm thấy sản phẩm' });
+                else {
+                    Comment.find({ productId: product._id })
+                        .then(comments => {
+                            res.render('products/show', {
+                                user: req.session.user,
+                                product: mongooseToObject(product),
+                                comments: multipleMongooseToObject(comments)
+                            });
                         });
-                    });
+                }
             })
             .catch(next);
     }
@@ -65,7 +68,7 @@ class ShopController {
             .then(products => {
                 res.render('search', {
                     title: 'Kết quả tìm kiếm cho' + searchText,
-                    user: req.user,
+                    user: req.session.user,
                     searchProducts: multipleMongooseToObject(products),
                     searchT: searchText
                 })
@@ -87,6 +90,11 @@ class ShopController {
                 if (!cart) {
                     const cart = new Cart(data);
                     cart.save();
+                } else {
+                    res.json({
+                        addSuccess: false,
+                        message: 'Không tìm thấy sản phẩm'
+                    });
                 }
             })
             .then(() => res.json({
@@ -270,4 +278,5 @@ class ShopController {
         userOrder.save();
     }
 }
+
 module.exports = new ShopController;

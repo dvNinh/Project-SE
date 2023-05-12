@@ -14,9 +14,20 @@
 </head>
 
 <body>
+    {{#if noHeader}}
+    {{else}}
+    <div class="header" style="height: 56px;">
+        {{> header}}
+    </div>
+    {{/if}}
+
     <div class="app">
         {{{body}}}
     </div>
+    
+    <footer class="footer">
+        {{> footer}}
+    </footer>
 </body>
 
 </html>
