@@ -1,121 +1,235 @@
 [{
-    "_id": {
-        "$oid": "642d0b668a6124febb481a51"
-    },
-    "name": "Màn hình Asus TUF GAMING VG249Q1A 24\"",
-    "description": "Màn hình Asus TUF GAMING VG249Q1A sử dụng tấm nền IPS 23,8 inch, độ phân giải Full HD (1920 X 1080) mang đến hình ảnh rõ nét từ mọi góc độ. Màn hình góc rộng 178 độ đảm bảo hạn chế thấp nhất sự biến dạng và thay đổi màu sắc ngay cả khi bạn đang đứng cách xa màn hình. Tốc độ làm mới cũng được ép xung lên đến 165Hz giúp loại trừ khả năng bị giật, lag màn hình và mang đến cho bạn ưu thế trong các tựa game bắn súng, đua xe, chiến lược thời gian thực và thể thao. Tốc độ làm mới này cho phép bạn chơi game với cấu hình hình ảnh ở mức cao nhất và phản ứng tức thì với những nội dung hiện trên màn hình.",
-    "price": 3999000,
-    "image": "https://product.hstatic.net/1000026716/product/inh-asus-tuf-gaming-vg249q1a-24-ips-165hz-gsync-compatible-chuyen-game_b0fbfe425ebc40739fc163c018199f69.jpg",
-    "quantity": 10,
-    "createdAt": {
-        "$date": "2023-04-05T05:47:18.655Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T05:47:18.655Z"
-    },
-    "__v": 0,
-    "slug": "Màn hình Asus TUF GAMING VG249Q1A 24\""
-}, {
-    "_id": {
-        "$oid": "642d24458a6124febb481a5f"
-    },
-    "name": "Laptop Gaming MSI Titan GT77 HX 13VI 077VN",
-    "description": "MSI Titan GT77 HX 13VI 077VN đặt ngay vào tầm nhìn của người dùng với một vẻ ngoài bảnh bao cùng với đó là sự hầm hố trên từng đường nét. Tất cả từng chi tiết trên chiếc laptop gaming MSI đều được trau chuốt mang đến độ hoàn thiện một cách tuyệt đối, từ khu vực tản nhiệt ẩn sau là lớp đèn sặc sỡ đến phần mặt A hào nhoáng, bóng bẩy. Khoác lên lớp áo đen huyền bí, MSI đã tạo nên một chú hỏa long cứng cáp mà mọi game thủ đều ao ước.",
-    "price": 150000000,
-    "image": "https://product.hstatic.net/1000026716/product/titan-gt77-hx-13vi-077vn-i9-13980hx-1_83731848443b40f4b458cf71adf54642_39745f2eba4d48129723154f1949b577.png",
-    "quantity": 2,
-    "createdAt": {
-        "$date": "2023-04-05T07:33:25.456Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T07:33:25.456Z"
-    },
-    "__v": 0,
-    "slug": "Laptop Gaming MSI Titan GT77 HX 13VI 077VN"
-}, {
-    "_id": {
-        "$oid": "642d24a88a6124febb481a62"
-    },
-    "name": "Bàn phím cơ Corsair K65 RGB MINI",
-    "description": "Corsair K65 RGB MINI cung cấp các tính năng lớn được gói gọn trong kiểu phím 60%, dễ dàng phù hợp với mọi thiết lập để chơi game thoải mái và di chuyển. Cùng với thiết kế vô cùng nhỏ gọn không khác gì các dòng bàn phím không dây. Đây sẽ là một trong những sản phẩm ngoại vi dành cho game thủ thích một góc máy chơi game gọn gàng.",
-    "price": 2590000,
-    "image": "https://product.hstatic.net/1000026716/product/gearvn-ban-phim-co-corsair-k65-rgb-mini-cherry-mx-speed-switch-1_cee15540aafa4243b01b35d996dcae2e.jpg",
-    "quantity": 10,
-    "createdAt": {
-        "$date": "2023-04-05T07:35:04.923Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T07:35:04.923Z"
-    },
-    "__v": 0,
-    "slug": "Bàn phím cơ Corsair K65 RGB MINI"
-}, {
-    "_id": {
-        "$oid": "642d27bf8a6124febb481a7b"
-    },
-    "name": "Laptop Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN",
-    "description": "Một trong những sản phẩm laptop văn phòng đáng sở hữu trong năm nay là Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN. Nếu bạn đang bâng khuâng giữa nhiều sản phẩm laptop ngoài kia thì hãy tham khảo ngay chiếc laptop Lenovo này. Sở hữu thiết kế sang trọng, cấu hình mạnh mẽ hỗ trợ tối đa nhu cầu học tập và làm việc hằng ngày.",
-    "price": 26490000,
-    "image": "https://product.hstatic.net/1000026716/product/gearvn-laptop-lenovo-ideapad-5-pro-16arh7-82sn003lvn-2_f1588f7be7804f52b3cabfa63c2d58c7.png",
-    "quantity": 5,
-    "createdAt": {
-        "$date": "2023-04-05T07:48:15.378Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T07:48:15.378Z"
-    },
-    "__v": 0,
-    "slug": "Laptop Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN"
-}, {
-    "_id": {
-        "$oid": "642d4621a920c30eac8ff8be"
-    },
-    "name": "Apple Magic Keyboard",
-    "description": "Apple là thương hiệu nổi tiếng với các sản phẩm công nghệ hiện đại. Sự phủ sóng của các sản phẩm nhà Táo trên thị trường ngày nay rất lớn ví dụ như: Macbook, iMac, iPhone,... Và bàn phím Apple Magic Keyboard 2 cũng là một trong những thiết kế cao cấp từ thương hiệu hỗ trợ trong công việc hằng ngày. ",
-    "price": 2590000,
-    "image": "https://product.hstatic.net/1000026716/product/gearvn-apple-magic-keyboard-2-silver-1_70179c8ce6c8463f860e6caf3a1e124d.png",
-    "quantity": 5,
-    "createdAt": {
-        "$date": "2023-04-05T09:57:53.565Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T09:57:53.565Z"
-    },
-    "__v": 0,
-    "slug": "Apple Magic Keyboard"
-}, {
-    "_id": {
-        "$oid": "642d467ca920c30eac8ff8c2"
-    },
-    "name": "Chuột Logitech G Pro X Superlight Wireless Black",
-    "description": "Chuột Logitech G Pro X Superlight Wireless Black là một trong những dòng chuột máy tính nhẹ nhất từ trước tới nay của Logitech, Logitech G Pro X Superlight Wireless White là bước đột phá về kỹ thuật khi đạt được trọng lượng ít hơn 63 gram – nhẹ hơn gần 25% so với chuột PRO không dây tiêu chuẩn của Logitech.",
-    "price": 2990000,
-    "image": "https://product.hstatic.net/1000026716/product/gearvn-chuot-logitech-g-pro-x-superlight-wireless-black-666_83650815ce2e486f9108dbbb17c29159.jpg",
-    "quantity": 5,
-    "createdAt": {
-        "$date": "2023-04-05T09:59:24.693Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T09:59:24.693Z"
-    },
-    "__v": 0,
-    "slug": "Chuột Logitech G Pro X Superlight Wireless Black"
-}, {
-    "_id": {
-        "$oid": "642d47b3a920c30eac8ff8c8"
-    },
-    "name": "Tai nghe thể thao Bluetooth Sony WI - C200",
-    "description": "Tai nghe thể thao Sony WI - C200 với thiết kế vòng quanh cổ thoải mái, không hề vướng víu, giúp bạn thư thái hoàn toàn khi nghe nhạc. Mang đến hiệu suất âm thanh sống động với âm trầm sâu, âm bổng mạnh mẽ và độ trong trẻo vượt trội, cho bạn tận hưởng một bản nhạc trọn vẹn",
-    "price": 890000,
-    "image": "https://product.hstatic.net/1000026716/product/sony-wi-c200-6_54f597ca1ea6459a818b0a8c100bde48.jpg",
-    "quantity": 10,
-    "createdAt": {
-        "$date": "2023-04-05T10:04:35.812Z"
-    },
-    "updatedAt": {
-        "$date": "2023-04-05T10:04:35.812Z"
-    },
-    "__v": 0,
-    "slug": "Tai nghe thể thao Bluetooth Sony WI - C200"
-
+  "_id": {
+    "$oid": "642d0b668a6124febb481a51"
+  },
+  "name": "Màn hình Asus TUF GAMING VG249Q1A 24\"",
+  "description": "Màn hình Asus TUF GAMING VG249Q1A sử dụng tấm nền IPS 23,8 inch, độ phân giải Full HD (1920 X 1080) mang đến hình ảnh rõ nét từ mọi góc độ. Màn hình góc rộng 178 độ đảm bảo hạn chế thấp nhất sự biến dạng và thay đổi màu sắc ngay cả khi bạn đang đứng cách xa màn hình. Tốc độ làm mới cũng được ép xung lên đến 165Hz giúp loại trừ khả năng bị giật, lag màn hình và mang đến cho bạn ưu thế trong các tựa game bắn súng, đua xe, chiến lược thời gian thực và thể thao. Tốc độ làm mới này cho phép bạn chơi game với cấu hình hình ảnh ở mức cao nhất và phản ứng tức thì với những nội dung hiện trên màn hình.",
+  "price": 3999000,
+  "image": "https://product.hstatic.net/1000026716/product/inh-asus-tuf-gaming-vg249q1a-24-ips-165hz-gsync-compatible-chuyen-game_b0fbfe425ebc40739fc163c018199f69.jpg",
+  "quantity": 10,
+  "createdAt": {
+    "$date": "2023-04-05T05:47:18.655Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:46.385Z"
+  },
+  "__v": 0,
+  "slug": "Màn hình Asus TUF GAMING VG249Q1A 24\"",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d24458a6124febb481a5f"
+  },
+  "name": "Laptop Gaming MSI Titan GT77 HX 13VI 077VN",
+  "description": "MSI Titan GT77 HX 13VI 077VN đặt ngay vào tầm nhìn của người dùng với một vẻ ngoài bảnh bao cùng với đó là sự hầm hố trên từng đường nét. Tất cả từng chi tiết trên chiếc laptop gaming MSI đều được trau chuốt mang đến độ hoàn thiện một cách tuyệt đối, từ khu vực tản nhiệt ẩn sau là lớp đèn sặc sỡ đến phần mặt A hào nhoáng, bóng bẩy. Khoác lên lớp áo đen huyền bí, MSI đã tạo nên một chú hỏa long cứng cáp mà mọi game thủ đều ao ước.",
+  "price": 150000000,
+  "image": "https://product.hstatic.net/1000026716/product/titan-gt77-hx-13vi-077vn-i9-13980hx-1_83731848443b40f4b458cf71adf54642_39745f2eba4d48129723154f1949b577.png",
+  "quantity": 2,
+  "createdAt": {
+    "$date": "2023-04-05T07:33:25.456Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:47.109Z"
+  },
+  "__v": 0,
+  "slug": "Laptop Gaming MSI Titan GT77 HX 13VI 077VN",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d24a88a6124febb481a62"
+  },
+  "name": "Bàn phím cơ Corsair K65 RGB MINI",
+  "description": "Corsair K65 RGB MINI cung cấp các tính năng lớn được gói gọn trong kiểu phím 60%, dễ dàng phù hợp với mọi thiết lập để chơi game thoải mái và di chuyển. Cùng với thiết kế vô cùng nhỏ gọn không khác gì các dòng bàn phím không dây. Đây sẽ là một trong những sản phẩm ngoại vi dành cho game thủ thích một góc máy chơi game gọn gàng.",
+  "price": 2590000,
+  "image": "https://product.hstatic.net/1000026716/product/gearvn-ban-phim-co-corsair-k65-rgb-mini-cherry-mx-speed-switch-1_cee15540aafa4243b01b35d996dcae2e.jpg",
+  "quantity": 10,
+  "createdAt": {
+    "$date": "2023-04-05T07:35:04.923Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:47.563Z"
+  },
+  "__v": 0,
+  "slug": "Bàn phím cơ Corsair K65 RGB MINI",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d27bf8a6124febb481a7b"
+  },
+  "name": "Laptop Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN",
+  "description": "Một trong những sản phẩm laptop văn phòng đáng sở hữu trong năm nay là Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN. Nếu bạn đang bâng khuâng giữa nhiều sản phẩm laptop ngoài kia thì hãy tham khảo ngay chiếc laptop Lenovo này. Sở hữu thiết kế sang trọng, cấu hình mạnh mẽ hỗ trợ tối đa nhu cầu học tập và làm việc hằng ngày.",
+  "price": 26490000,
+  "image": "https://product.hstatic.net/1000026716/product/gearvn-laptop-lenovo-ideapad-5-pro-16arh7-82sn003lvn-2_f1588f7be7804f52b3cabfa63c2d58c7.png",
+  "quantity": 5,
+  "createdAt": {
+    "$date": "2023-04-05T07:48:15.378Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:47.989Z"
+  },
+  "__v": 0,
+  "slug": "Laptop Lenovo IdeaPad 5 Pro 16ARH7 82SN003LVN",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d4621a920c30eac8ff8be"
+  },
+  "name": "Apple Magic Keyboard",
+  "description": "Apple là thương hiệu nổi tiếng với các sản phẩm công nghệ hiện đại. Sự phủ sóng của các sản phẩm nhà Táo trên thị trường ngày nay rất lớn ví dụ như: Macbook, iMac, iPhone,... Và bàn phím Apple Magic Keyboard 2 cũng là một trong những thiết kế cao cấp từ thương hiệu hỗ trợ trong công việc hằng ngày. ",
+  "price": 2590000,
+  "image": "https://product.hstatic.net/1000026716/product/gearvn-apple-magic-keyboard-2-silver-1_70179c8ce6c8463f860e6caf3a1e124d.png",
+  "quantity": 5,
+  "createdAt": {
+    "$date": "2023-04-05T09:57:53.565Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:48.445Z"
+  },
+  "__v": 0,
+  "slug": "Apple Magic Keyboard",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d467ca920c30eac8ff8c2"
+  },
+  "name": "Chuột Logitech G Pro X Superlight Wireless Black",
+  "description": "Chuột Logitech G Pro X Superlight Wireless Black là một trong những dòng chuột máy tính nhẹ nhất từ trước tới nay của Logitech, Logitech G Pro X Superlight Wireless White là bước đột phá về kỹ thuật khi đạt được trọng lượng ít hơn 63 gram – nhẹ hơn gần 25% so với chuột PRO không dây tiêu chuẩn của Logitech.",
+  "price": 2990000,
+  "image": "https://product.hstatic.net/1000026716/product/gearvn-chuot-logitech-g-pro-x-superlight-wireless-black-666_83650815ce2e486f9108dbbb17c29159.jpg",
+  "quantity": 5,
+  "createdAt": {
+    "$date": "2023-04-05T09:59:24.693Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:48.823Z"
+  },
+  "__v": 0,
+  "slug": "Chuột Logitech G Pro X Superlight Wireless Black",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "642d47b3a920c30eac8ff8c8"
+  },
+  "name": "Tai nghe thể thao Bluetooth Sony WI - C200",
+  "description": "Tai nghe thể thao Sony WI - C200 với thiết kế vòng quanh cổ thoải mái, không hề vướng víu, giúp bạn thư thái hoàn toàn khi nghe nhạc. Mang đến hiệu suất âm thanh sống động với âm trầm sâu, âm bổng mạnh mẽ và độ trong trẻo vượt trội, cho bạn tận hưởng một bản nhạc trọn vẹn",
+  "price": 890000,
+  "image": "https://product.hstatic.net/1000026716/product/sony-wi-c200-6_54f597ca1ea6459a818b0a8c100bde48.jpg",
+  "quantity": 10,
+  "createdAt": {
+    "$date": "2023-04-05T10:04:35.812Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:42:51.010Z"
+  },
+  "__v": 0,
+  "slug": "Tai nghe thể thao Bluetooth Sony WI - C200",
+  "deleted": false
+},{
+  "_id": {
+    "$oid": "645ece7d970d3638c40811c3"
+  },
+  "name": "Laptop Lenovo Ideapad gaming 3 15IAH7 82S90086VN",
+  "description": "Laptop Lenovo Ideapad gaming 3 15IAH7 82S90086VN là một trong những laptop chơi game thế hệ mới. Gây ấn tượng mạnh với dòng laptop mỏng nhẹ, Lenovo lại một lần nữa khuấy đảo thị trường laptop gaming với Ideapad gaming 3. Ngôn ngữ thiết kế đột phá, hiệu năng ấn tượng chính là điểm thu hút một khối lượng lớn người dùng.",
+  "price": 20490000,
+  "image": "https://product.hstatic.net/1000026716/product/3-15arh7-82sb007kvn-r7-6800h-2_0da9887223a34f448a9347af781443a9_master_2ec3866e2d874f61b351b0374324b3f3.png",
+  "quantity": 15,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-12T23:40:45.218Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:40:45.218Z"
+  },
+  "__v": 0,
+  "slug": "Laptop Lenovo Ideapad gaming 3 15IAH7 82S90086VN"
+},{
+  "_id": {
+    "$oid": "645ecf38970d3638c40811e4"
+  },
+  "name": "Chuột Havit MS1017",
+  "description": "Havit MS1017 là một trong những dòng sản phẩm chuột gaming mới nhất từ Havit. Sở hữu thiết kế đối xứng ôm sát lòng bàn tay trong từng pha di chuyển, tích hợp hệ thống LED RGB sinh động, cùng với đó là độ nhạy có thể tùy chỉnh lên đến 6.400 DPI tùy theo nhu cầu sử dụng. ",
+  "price": 190000,
+  "image": "https://product.hstatic.net/1000026716/product/thumbchuot_7bffc5b382044ed18513b367fa222b4b.gif",
+  "quantity": 20,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-12T23:43:52.715Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:43:52.715Z"
+  },
+  "__v": 0,
+  "slug": "Chuột Havit MS1017"
+},{
+  "_id": {
+    "$oid": "645ecf94970d3638c40811e7"
+  },
+  "name": "Màn hình ASUS VZ27EHE 27\" IPS 75Hz viền mỏng",
+  "description": "Màn hình ASUS VZ27EHE 27 inch IPS 75Hz viền mỏng là một sản phẩm màn hình PC mới từ nhà Asus. ASUS VZ27EHE trình làng với một diện mạo mới vô cùng hút mắt khi sở hữu đường viền siêu mỏng chỉ 6.5mm giúp hình ảnh hiển thị được liền mạch và đẹp mắt hơn. Ngoài ra, ASUS cũng trang bị rất nhiều tính năng và công nghệ mới độc quyền trên chiếc màn hình Asus này để nâng cao trải nghiệm của người dùng.",
+  "price": 3490000,
+  "image": "https://product.hstatic.net/1000026716/product/asus_vz27ehe_gearvn_6c045841ab7c461cbb8f09feb57ec929.jpg",
+  "quantity": 14,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-12T23:45:24.001Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:45:24.001Z"
+  },
+  "__v": 0,
+  "slug": "Màn hình ASUS VZ27EHE 27\" IPS 75Hz viền mỏng"
+},{
+  "_id": {
+    "$oid": "645ed00a970d3638c40811ea"
+  },
+  "name": "Bàn phím cơ AKKO PC98B Plus AIR",
+  "description": "AKKO PC98B Plus AIR dòng bàn phím cơ vô cùng Trendy khi sở hữu layout Tenkeyless chỉ với 98 phím bấm vô cùng nhỏ gọn và tiện lợi. Tích hợp 3 chế độ kết nối khác nhau, sử dụng switch độc quyền,..Hữa hẹn AKKO PC98B Plus AIR sẽ là một trong những sự lựa chọn mang đến trải nghiệm gõ phím độc đáo.  Thiết kế nổi bật, nhỏ gọn và tinh tế. Mang đến thị trường bàn phím máy tính một trong những dòng bàn phím cơ sở hữu thiết kế nhỏ gọn với 98 phím bấm. Nếu bạn là người dùng thường xuyên soạn thảo văn bản, làm việc với số liệu thì đây chính là dòng bàn phím không nên bỏ qua.",
+  "price": 2490000,
+  "image": "https://product.hstatic.net/1000026716/product/thumbphim-recovered_75d81b3808e24d4d93607803d8f6dc7c.gif",
+  "quantity": 12,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-12T23:47:22.883Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:47:22.883Z"
+  },
+  "__v": 0,
+  "slug": "Bàn phím cơ AKKO PC98B Plus AIR"
+},{
+  "_id": {
+    "$oid": "645ed2a83f55657e5803c49d"
+  },
+  "name": "Tai nghe Corsair HS70 Pro Wireless Carbon",
+  "description": "Corsair HS70 Pro Wireless Carbon là dòng tai nghe máy tính có phần đệm tai mềm mại, dày dặn, độ sâu lớn, trùm kín tai hạn chế âm thanh từ bên ngoài lọt vào, cùng với độ bền cao, độ đàn hồi lớn ít bị biến dạng và khó rách.   Phần khung giữ hai củ tai làm bằng thép chắc chắn hạn chế va đập, phần khung phía trên được làm bằng chất liệu da màu đen có chỉ đan chéo ô vuông đem lại cảm giác sang trọng và rất thoải mái khi sử dụng.",
+  "price": 1790000,
+  "image": "https://product.hstatic.net/1000026716/product/thumbtainghe_43854b38b58545be8683a4e1cbcf1d67.png",
+  "quantity": 14,
+  "slug": "Tai nghe Corsair HS70 Pro Wireless Carbon",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-12T23:58:32.472Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-12T23:58:32.472Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "645ed38b3f55657e5803c4af"
+  },
+  "name": "Laptop Asus Vivobook Pro 15 OLED M6500QC MA002W",
+  "description": "Asus vừa cho ra mắt một sản phẩm laptop mới cho dòng Asus Vivobook Pro. M6500QC MA002W sở hữu thiết kế sang trọng vốn có và cấu hình mạnh mẽ từ CPU AMD R5 cùng với 16GB DDR4, bạn chắc chắn sẽ hài lòng với hiệu năng mà nó đem lại. Những nâng cấp mới và hiện đại nhất như màn hình OLED, hệ thống tản nhiệt kép, kết nối thế hệ mới,...cũng đều được hãng sản xuất áp dụng vào Asus Vivobook Pro 15 OLED M6500QC MA002W để nâng cấp trải nghiệm cho người dùng phổ thông.",
+  "price": 22999000,
+  "image": "https://product.hstatic.net/1000026716/product/gearvn-laptop-asus-vivobook-pro-15-oled-m6500qc-ma002w-2_9b6da505c4fd4096bd93f6a3ee635a94.png",
+  "quantity": 12,
+  "slug": "Laptop Asus Vivobook Pro 15 OLED M6500QC MA002W",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-05-13T00:02:19.157Z"
+  },
+  "updatedAt": {
+    "$date": "2023-05-13T00:02:19.157Z"
+  },
+  "__v": 0
 }]

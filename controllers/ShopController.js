@@ -36,6 +36,7 @@ class ShopController {
             return;
         }
         const formData = req.body;
+        formData['slug'] = req.body.name;
         const product = new Product(formData);
         product.save()
             .then(() =>
